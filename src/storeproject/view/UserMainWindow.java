@@ -5,17 +5,14 @@
  */
 package storeproject.view;
 
-/**
- *
- * @author Omar
- */
 public class UserMainWindow extends javax.swing.JFrame {
-
-    /**
-     * Creates new form UserMainWindow
-     */
+    
+    public static String cartText = "Carrito";
+    
     public UserMainWindow() {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**
@@ -29,14 +26,19 @@ public class UserMainWindow extends javax.swing.JFrame {
 
         userNameTxt = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        closeSessionBtn = new javax.swing.JButton();
         productsPanel = new javax.swing.JScrollPane();
         jButton3 = new javax.swing.JButton();
         allProductsBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton2.setText("Cerrar sesión");
+        closeSessionBtn.setText("Cerrar sesión");
+        closeSessionBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeSessionBtnActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Modificar");
 
@@ -62,7 +64,7 @@ public class UserMainWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 309, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(closeSessionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(228, 228, 228)
@@ -74,10 +76,12 @@ public class UserMainWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2)
-                        .addComponent(jButton3))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(closeSessionBtn)
+                            .addComponent(jButton3)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(39, 39, 39))
                     .addComponent(userNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(productsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -94,6 +98,12 @@ public class UserMainWindow extends javax.swing.JFrame {
         ProductsWindow products = new ProductsWindow();
         products.setVisible(true);
     }//GEN-LAST:event_allProductsBtnActionPerformed
+
+    private void closeSessionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeSessionBtnActionPerformed
+        this.dispose();
+        LoginWindow login = new LoginWindow();
+        login.setVisible(true);
+    }//GEN-LAST:event_closeSessionBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -132,8 +142,8 @@ public class UserMainWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton allProductsBtn;
+    private javax.swing.JButton closeSessionBtn;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane productsPanel;
     private javax.swing.JLabel userNameTxt;

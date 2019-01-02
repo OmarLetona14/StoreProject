@@ -24,7 +24,7 @@ public class AdministratorMainWindow extends javax.swing.JFrame {
         productsAdministrationBtn = new javax.swing.JButton();
         offerAdministrationBtn = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        closeSessionBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -44,7 +44,12 @@ public class AdministratorMainWindow extends javax.swing.JFrame {
 
         jButton3.setText("Reportes");
 
-        jButton4.setText("Cerrar sesión");
+        closeSessionBtn.setText("Cerrar sesión");
+        closeSessionBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeSessionBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -60,14 +65,14 @@ public class AdministratorMainWindow extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(297, 297, 297)
-                .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+                .addComponent(closeSessionBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton4)
+                .addComponent(closeSessionBtn)
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(productsAdministrationBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
@@ -90,6 +95,12 @@ public class AdministratorMainWindow extends javax.swing.JFrame {
         OfferAdministrationWindow offerAdministration = new OfferAdministrationWindow();
         offerAdministration.setVisible(true);
     }//GEN-LAST:event_offerAdministrationBtnActionPerformed
+
+    private void closeSessionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeSessionBtnActionPerformed
+        this.dispose();
+        LoginWindow login = new LoginWindow();
+        login.setVisible(true);
+    }//GEN-LAST:event_closeSessionBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -127,8 +138,8 @@ public class AdministratorMainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton closeSessionBtn;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton offerAdministrationBtn;
     private javax.swing.JButton productsAdministrationBtn;
     // End of variables declaration//GEN-END:variables

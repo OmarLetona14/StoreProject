@@ -35,6 +35,7 @@ public class ProductPanel extends JPanel {
         ImageIcon backgroundImageScaled = new ImageIcon (backgroundImages.getScaledInstance(95,80,Image.SCALE_DEFAULT));
         imageLbl.setIcon(backgroundImageScaled);
         listener = new ProductButtonActionListener();
+        productBtn = new JButton();
         productBtn.addActionListener(listener);
         productBtn.setText("Agregar a carrito");
         productBtn.setSize(75, 25);

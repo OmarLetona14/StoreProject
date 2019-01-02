@@ -10,7 +10,7 @@ import storeproject.nodo.OfferNodo;
 
 public class OfferQueue {
     
-     private OfferNodo first;
+    private OfferNodo first;
     int size=1;
     
     public OfferQueue(){

@@ -5,12 +5,21 @@
  */
 package storeproject.view;
 
+import javax.swing.JOptionPane;
+import storeproject.helper.RandomNumber;
+import storeproject.list.Lists;
+import storeproject.model.ProductTableModel;
+
 public class ProductAdministrationWindow extends javax.swing.JFrame {
+    
+    ProductTableModel model = new ProductTableModel();
+    RandomNumber random = RandomNumber.getSingletonInstance();
 
     public ProductAdministrationWindow() {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
+        productsTable.setModel(model);
     }
 
     /**
@@ -25,20 +34,21 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        descriptionTxt = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        priceTxt = new javax.swing.JTextField();
+        nameTxt = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        stockTxt = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        imageDirectionTxt = new javax.swing.JTextField();
+        addProductBtn = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        backBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        productsTable = new javax.swing.JTable();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,9 +56,9 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
 
         jLabel2.setText("Descripción");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        descriptionTxt.setColumns(20);
+        descriptionTxt.setRows(5);
+        jScrollPane1.setViewportView(descriptionTxt);
 
         jLabel3.setText("Precio");
 
@@ -56,15 +66,25 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
 
         jLabel5.setText("Direccion de la imagen");
 
-        jButton1.setText("Agregar");
+        addProductBtn.setText("Agregar");
+        addProductBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addProductBtnActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Modificar");
 
         jButton3.setText("Eliminar");
 
-        jButton4.setText("Atrás");
+        backBtn.setText("Atrás");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        productsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -75,7 +95,9 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(productsTable);
+
+        jButton5.setText("Agregar por cadena");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,24 +114,26 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-                            .addComponent(jTextField1)))
+                            .addComponent(priceTxt)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(27, 27, 27)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(nameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(62, 62, 62)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField3)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
+                    .addComponent(stockTxt)
+                    .addComponent(imageDirectionTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addProductBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)))
                 .addContainerGap(22, Short.MAX_VALUE))
             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
         );
@@ -119,10 +143,10 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(stockTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addProductBtn))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -132,22 +156,46 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(priceTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(imageDirectionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton2))
                         .addGap(18, 18, 18)
                         .addComponent(jButton3)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4)))
+                        .addComponent(jButton5)
+                        .addGap(18, 18, 18)
+                        .addComponent(backBtn)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void addProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductBtnActionPerformed
+        try{
+            Lists.products.addToFinal(random.generateIdentifier(), nameTxt.getText(), descriptionTxt.getText(), 
+                Double.valueOf(priceTxt.getText()), Integer.valueOf(stockTxt.getText()), imageDirectionTxt.getText());
+            JOptionPane.showMessageDialog(this, "Producto agregado correctamente", "Agregado",
+                            JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+            ProductAdministrationWindow adminWindow = new ProductAdministrationWindow();
+            adminWindow.setVisible(true);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_addProductBtnActionPerformed
+
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        this.dispose();
+        AdministratorMainWindow adminMainWindow = new AdministratorMainWindow();
+        adminMainWindow.setVisible(true);     
+    }//GEN-LAST:event_backBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -185,10 +233,13 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton addProductBtn;
+    private javax.swing.JButton backBtn;
+    private javax.swing.JTextArea descriptionTxt;
+    private javax.swing.JTextField imageDirectionTxt;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -196,11 +247,9 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField nameTxt;
+    private javax.swing.JTextField priceTxt;
+    private javax.swing.JTable productsTable;
+    private javax.swing.JTextField stockTxt;
     // End of variables declaration//GEN-END:variables
 }

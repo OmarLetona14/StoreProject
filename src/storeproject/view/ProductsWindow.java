@@ -14,19 +14,18 @@ public class ProductsWindow extends javax.swing.JFrame {
     
     ProductPanel[][] productsMatrix;
     int filas, tamaño;
-    public static String cartText = "Carrito";
     
     public ProductsWindow(){
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
-        cartBtn.setText(cartText);
+        cartBtn.setText(UserMainWindow.cartText);
         generateProductsMatrix();
     }
     
     private void generateProductsMatrix(){
-        filas = ((Lists.products.listSize()-1)/4)+1;
         tamaño = Lists.products.listSize()-1;
+        filas = (tamaño/4)+1;
         productsMatrix = new ProductPanel[filas][3];
         for(int fila = 0; fila<=filas; fila++){
             for(int columna = 0; columna<=3; columna++){
@@ -37,7 +36,7 @@ public class ProductsWindow extends javax.swing.JFrame {
                     } catch (Exception ex) {
                         Logger.getLogger(ProductsWindow.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    productsPanel.add(productsMatrix[fila][columna]);
+                    add(productsMatrix[fila][columna]);
                     tamaño--;                   
                 }
             }
@@ -96,7 +95,7 @@ public class ProductsWindow extends javax.swing.JFrame {
                         .addGap(39, 39, 39))
                     .addComponent(userNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(productsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
+                .addComponent(productsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 

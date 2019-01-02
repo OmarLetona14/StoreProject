@@ -5,6 +5,7 @@
  */
 package storeproject.view;
 
+import javax.swing.JOptionPane;
 import storeproject.list.Lists;
 
 /**
@@ -182,8 +183,12 @@ public class AddUserWindow extends javax.swing.JFrame {
         try{
             Lists.users.addToFinal(nameTxt.getText(), emailTxt.getText(), nicknameTxt.getText(),
                 String.valueOf(passwordTxt.getPassword()), tarjetNameTxt.getText(), "", CVCCodeTxt.getText());
+            JOptionPane.showMessageDialog(this, "Usuario agregado correctamente", "Agregado",
+                            JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
         }catch(Exception e){
-            
+            JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
+                            JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_addBtnActionPerformed

@@ -58,6 +58,18 @@ public class SimplyLinkedCircularListProduct {
         }
         return null;
     }
+    
+    public Product getProductByName(String name){
+        ProductNodo aux = first;
+        while(aux != null){
+            if(name.equals(aux.info.getName())){
+                return aux.info;
+            }else{
+                aux = aux.sig;
+            }
+        }
+        return null;
+    }
 
     public boolean serch(int idRef){
         ProductNodo aux = first;

@@ -43,6 +43,7 @@
                   <Component id="jButton2" pref="143" max="32767" attributes="0"/>
                   <Component id="jButton3" max="32767" attributes="0"/>
                   <Component id="jButton4" max="32767" attributes="0"/>
+                  <Component id="jButton5" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -69,10 +70,12 @@
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton5" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="286" max="32767" attributes="0"/>
+              <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" pref="306" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -148,5 +151,10 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="jButton5">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Carga de datos"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

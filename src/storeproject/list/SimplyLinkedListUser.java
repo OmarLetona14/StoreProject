@@ -69,10 +69,10 @@ public class SimplyLinkedListUser {
         }
         return null;
     }
-    public User getProfessorByName(String name){
+    public User getUserByNickname(String nickname){
         UserNodo aux = first;
         while(aux != null){
-            if(name.equals(aux.info.getName())){
+            if(nickname.equals(aux.info.getNickname())){
                 return aux.info;
             }else{
                 aux = aux.sig;

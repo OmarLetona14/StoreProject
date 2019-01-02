@@ -9,5 +9,6 @@ public class Lists {
     
     public static SimplyLinkedListUser users = new SimplyLinkedListUser();
     public static SimplyLinkedCircularListProduct products = new SimplyLinkedCircularListProduct();
+    public static OfferQueue offers = new OfferQueue();
     
 }

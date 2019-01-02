@@ -5,7 +5,13 @@
  */
 package storeproject.view;
 
+import javax.swing.JOptionPane;
+import storeproject.list.Lists;
+import storeproject.model.User;
+
 public class LoginWindow extends javax.swing.JFrame {
+    
+    public static User currentUser;
 
     public LoginWindow() {
         initComponents();
@@ -36,6 +42,11 @@ public class LoginWindow extends javax.swing.JFrame {
         jLabel2.setText("Password");
 
         loginBtn.setText("Ingresar");
+        loginBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginBtnActionPerformed(evt);
+            }
+        });
 
         registerBtn.setText("Registrarse");
         registerBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -92,6 +103,25 @@ public class LoginWindow extends javax.swing.JFrame {
         AddUserWindow addUser = new AddUserWindow();
         addUser.setVisible(true);
     }//GEN-LAST:event_registerBtnActionPerformed
+
+    private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
+        if(Lists.users.loginSerch(nicknameTxt.getText(), String.valueOf(passwordTxt.getPassword()))){
+            currentUser = Lists.users.getUserByNickname(nicknameTxt.getText());
+            if(currentUser.getNickname().equals("ADMIN")){
+                this.dispose();
+                AdministratorMainWindow mainWindow = new AdministratorMainWindow();
+                mainWindow.setVisible(true);
+            }else{
+                this.dispose();
+                UserMainWindow userWindow = new UserMainWindow();
+                userWindow.setVisible(true);
+            }
+        
+        }else{
+            JOptionPane.showMessageDialog(this, "Credenciales incorrectas", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_loginBtnActionPerformed
 
     /**
      * @param args the command line arguments

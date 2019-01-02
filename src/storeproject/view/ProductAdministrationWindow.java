@@ -5,17 +5,12 @@
  */
 package storeproject.view;
 
-/**
- *
- * @author Omar
- */
 public class ProductAdministrationWindow extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ProductAdministrationWindow
-     */
     public ProductAdministrationWindow() {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**

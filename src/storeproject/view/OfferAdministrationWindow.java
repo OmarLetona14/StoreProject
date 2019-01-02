@@ -5,17 +5,12 @@
  */
 package storeproject.view;
 
-/**
- *
- * @author Omar
- */
 public class OfferAdministrationWindow extends javax.swing.JFrame {
 
-    /**
-     * Creates new form OfferAdministrationWindow
-     */
     public OfferAdministrationWindow() {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**

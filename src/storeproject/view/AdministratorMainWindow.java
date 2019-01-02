@@ -5,17 +5,11 @@
  */
 package storeproject.view;
 
-/**
- *
- * @author Omar
- */
 public class AdministratorMainWindow extends javax.swing.JFrame {
-
-    /**
-     * Creates new form AdministratorMainWindow
-     */
     public AdministratorMainWindow() {
         initComponents();
+         setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**

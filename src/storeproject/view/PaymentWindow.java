@@ -5,17 +5,12 @@
  */
 package storeproject.view;
 
-/**
- *
- * @author Omar
- */
 public class PaymentWindow extends javax.swing.JFrame {
 
-    /**
-     * Creates new form PaymentWindow
-     */
     public PaymentWindow() {
         initComponents();
+         setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**

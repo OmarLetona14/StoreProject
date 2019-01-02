@@ -5,17 +5,12 @@
  */
 package storeproject.view;
 
-/**
- *
- * @author Omar
- */
 public class CartWindow extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CartWindow
-     */
     public CartWindow() {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**

@@ -34,7 +34,7 @@ public class SimplyLinkedCircularListProduct {
             first = newNodo;
         }else{
             ProductNodo aux = first;
-            while(aux.sig!=null){
+            while(aux.sig!=null && aux.sig!=first){
                 aux = aux.sig;
             }
             aux.sig = newNodo; 
@@ -51,8 +51,12 @@ public class SimplyLinkedCircularListProduct {
             }else{
                 ProductNodo aux = first;
                 for(int i=1; i<idRef; i++){
+                    if(aux.sig==first){
+                    passed = true;
+                    }
                     aux = aux.sig;
                 }
+                
                 return aux.info;
             }
         }
@@ -61,7 +65,7 @@ public class SimplyLinkedCircularListProduct {
     
     public Product getProductByName(String name){
         ProductNodo aux = first;
-        while(aux != null){
+        while(aux != null && !passed){
             if(name.equals(aux.info.getName())){
                 return aux.info;
             }else{
@@ -84,7 +88,7 @@ public class SimplyLinkedCircularListProduct {
         return found;
     }
     
-    public void edit(int idRef, int identifier, String name, String description, double price, int stock, String imageDirection, Offer offer){
+    public void edit(int idRef, String name, String description, double price, int stock, String imageDirection){
         if(serch(idRef)){
             ProductNodo aux = first;
             while(aux.info.getIdProduct() != idRef && !passed){
@@ -93,13 +97,11 @@ public class SimplyLinkedCircularListProduct {
                 }
                 aux = aux.sig;
             }
-            aux.info.setIdentifier(identifier);
             aux.info.setName(name);
             aux.info.setDescription(description);
             aux.info.setPrice(price);
             aux.info.setStock(stock);
             aux.info.setImageDirection(imageDirection);
-            aux.info.setOffer(offer);
         }
     
     }

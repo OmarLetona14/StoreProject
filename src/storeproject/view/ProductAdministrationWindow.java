@@ -5,21 +5,52 @@
  */
 package storeproject.view;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import storeproject.helper.CustomFileReader;
 import storeproject.helper.RandomNumber;
 import storeproject.list.Lists;
+import storeproject.model.Product;
 import storeproject.model.ProductTableModel;
 
 public class ProductAdministrationWindow extends javax.swing.JFrame {
     
     ProductTableModel model = new ProductTableModel();
     RandomNumber random = RandomNumber.getSingletonInstance();
-
+    CustomFileReader fileReader = new CustomFileReader();
+    private Product modifyProduct;
+    private boolean notSelected = true;
+    private static int selected = 0;
+    
     public ProductAdministrationWindow() {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
         productsTable.setModel(model);
+        modifyBtn.setEnabled(false);
+        productsTable.addMouseListener(new MouseAdapter(){
+        @Override
+        public void mouseClicked(MouseEvent e) {
+           notSelected = false;
+           int fila = productsTable.rowAtPoint(e.getPoint());
+           selected = fila;
+                try {
+                    modifyBtn.setEnabled(true);
+                    addProductBtn.setEnabled(false);
+                modifyProduct = Lists.products.getProductAt(selected+1);
+                nameTxt.setText(modifyProduct.getName());
+                descriptionTxt.setText(modifyProduct.getDescription());
+                priceTxt.setText(String.valueOf(modifyProduct.getPrice()));
+                stockTxt.setText(String.valueOf(modifyProduct.getStock()));
+                imageDirectionTxt.setText(modifyProduct.getImageDirection());
+                } catch (Exception ex) {
+                Logger.getLogger(ProductAdministrationWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+         });
     }
 
     /**
@@ -43,14 +74,19 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         imageDirectionTxt = new javax.swing.JTextField();
         addProductBtn = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        modifyBtn = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
         backBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         productsTable = new javax.swing.JTable();
-        jButton5 = new javax.swing.JButton();
+        loadArchiveBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         jLabel1.setText("Nombre");
 
@@ -73,9 +109,19 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Modificar");
+        modifyBtn.setText("Modificar");
+        modifyBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modifyBtnActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Eliminar");
+        deleteBtn.setText("Eliminar");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
 
         backBtn.setText("Atrás");
         backBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -97,7 +143,12 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(productsTable);
 
-        jButton5.setText("Agregar por cadena");
+        loadArchiveBtn.setText("Cargar archivo");
+        loadArchiveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadArchiveBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -128,12 +179,11 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
                     .addComponent(imageDirectionTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(addProductBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)))
+                    .addComponent(loadArchiveBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                    .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(deleteBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addProductBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(modifyBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))
                 .addContainerGap(22, Short.MAX_VALUE))
             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
         );
@@ -161,11 +211,11 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(imageDirectionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2))
+                            .addComponent(modifyBtn))
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3)
+                        .addComponent(deleteBtn)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton5)
+                        .addComponent(loadArchiveBtn)
                         .addGap(18, 18, 18)
                         .addComponent(backBtn)))
                 .addGap(18, 18, 18)
@@ -196,6 +246,73 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
         AdministratorMainWindow adminMainWindow = new AdministratorMainWindow();
         adminMainWindow.setVisible(true);     
     }//GEN-LAST:event_backBtnActionPerformed
+
+    private void loadArchiveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadArchiveBtnActionPerformed
+        try{
+            fileReader.readArchive("C:\\Users\\Omar\\Desktop\\StoreProject\\src\\archives\\products.proadd", "Products", this);
+            JOptionPane.showMessageDialog(this, "Archivo cargado correctamente", "Agregado",
+                            JOptionPane.INFORMATION_MESSAGE);
+            loadArchiveBtn.setEnabled(false);
+            this.dispose();
+            ProductAdministrationWindow productsWindow = new ProductAdministrationWindow();
+            productsWindow.setVisible(true);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_loadArchiveBtnActionPerformed
+
+    private void modifyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyBtnActionPerformed
+        if(!notSelected){
+           try{
+               Lists.products.edit(selected+1, nameTxt.getText().trim(), descriptionTxt.getText().trim(),
+                       Double.valueOf(priceTxt.getText().trim()), Integer.valueOf(stockTxt.getText().trim()),
+                       imageDirectionTxt.getText());
+                JOptionPane.showMessageDialog(this, "Producto editado correctamente", "Editado",
+                            JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+                ProductAdministrationWindow productsWindow = new ProductAdministrationWindow();
+                productsWindow.setVisible(true);
+                
+           }catch(Exception e){
+               JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+           }
+        }else{
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un elemento", "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_modifyBtnActionPerformed
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        modifyBtn.setEnabled(false);
+        addProductBtn.setEnabled(true);
+        nameTxt.setText("");
+        descriptionTxt.setText("");
+        priceTxt.setText("");
+        stockTxt.setText("");
+        imageDirectionTxt.setText("");
+    }//GEN-LAST:event_formMouseClicked
+
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        if(!notSelected){
+            try{
+            Lists.products.delete(selected +1);
+            JOptionPane.showMessageDialog(this, "Producto eliminado correctamente", "Editado",
+                            JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+            ProductAdministrationWindow productsWindow = new ProductAdministrationWindow();
+            productsWindow.setVisible(true);
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un elemento", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_deleteBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -235,11 +352,9 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addProductBtn;
     private javax.swing.JButton backBtn;
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JTextArea descriptionTxt;
     private javax.swing.JTextField imageDirectionTxt;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -247,6 +362,8 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton loadArchiveBtn;
+    private javax.swing.JButton modifyBtn;
     private javax.swing.JTextField nameTxt;
     private javax.swing.JTextField priceTxt;
     private javax.swing.JTable productsTable;

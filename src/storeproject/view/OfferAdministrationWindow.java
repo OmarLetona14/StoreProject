@@ -5,12 +5,59 @@
  */
 package storeproject.view;
 
-public class OfferAdministrationWindow extends javax.swing.JFrame {
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import storeproject.helper.CustomFileReader;
+import storeproject.list.Lists;
+import storeproject.list.SimplyLinkedCircularListProduct;
+import storeproject.model.Offer;
+import storeproject.model.OfferTableModel;
+import storeproject.model.Product;
 
+public class OfferAdministrationWindow extends javax.swing.JFrame {
+    
+    CustomFileReader fileReader = new CustomFileReader();
+    OfferTableModel model = new OfferTableModel();
+    private static int selected = 0;
+    Offer currentOffer;
+    SimplyLinkedCircularListProduct currentProducts;
+    private boolean notSelected = true;
+    private Product currentProduct;
+    
     public OfferAdministrationWindow() {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
+        offersTable.setModel(model);
+        generatePriorityCb();
+        generateProductsCb();
+        offersTable.addMouseListener(new MouseAdapter(){
+        @Override
+        public void mouseClicked(MouseEvent e) {
+           notSelected = false;
+           int fila = offersTable.rowAtPoint(e.getPoint());
+           selected = fila;
+            }
+         });
+    }
+    
+    private void generatePriorityCb(){
+        priorityCb.addItem("Alta");
+        priorityCb.addItem("Baja");
+    }
+    
+    private void generateProductsCb(){
+        for(int i=1; i<=Lists.products.listSize();i++){
+            try {
+                productsCb.addItem(Lists.products.getProductAt(i).getName());
+            } catch (Exception ex) {
+                Logger.getLogger(OfferAdministrationWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    
     }
 
     /**
@@ -25,16 +72,18 @@ public class OfferAdministrationWindow extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        productsCb = new javax.swing.JComboBox<>();
+        descriptionTxt = new javax.swing.JTextField();
+        discountTxt = new javax.swing.JTextField();
+        addProductBtn = new javax.swing.JButton();
+        addOfferBtn = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
+        backBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton5 = new javax.swing.JButton();
+        offersTable = new javax.swing.JTable();
+        loadArchiveBtn = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        priorityCb = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -44,17 +93,37 @@ public class OfferAdministrationWindow extends javax.swing.JFrame {
 
         jLabel3.setText("Productos a aplicar ");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
+        productsCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
 
-        jButton1.setText("Agregar producto");
+        addProductBtn.setText("Agregar producto");
+        addProductBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addProductBtnActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Agregar");
+        addOfferBtn.setText("Agregar");
+        addOfferBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addOfferBtnActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Eliminar");
+        deleteBtn.setText("Eliminar");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Atrás");
+        backBtn.setText("Atrás");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        offersTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -65,9 +134,18 @@ public class OfferAdministrationWindow extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(offersTable);
 
-        jButton5.setText("Carga de datos");
+        loadArchiveBtn.setText("Carga de datos");
+        loadArchiveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadArchiveBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Prioridad");
+
+        priorityCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,20 +156,22 @@ public class OfferAdministrationWindow extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox1, 0, 155, Short.MAX_VALUE)
-                    .addComponent(jTextField1)
-                    .addComponent(jTextField2))
+                    .addComponent(productsCb, 0, 155, Short.MAX_VALUE)
+                    .addComponent(descriptionTxt)
+                    .addComponent(discountTxt)
+                    .addComponent(priorityCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(addProductBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(addOfferBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                    .addComponent(deleteBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(loadArchiveBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE)
         );
@@ -101,27 +181,117 @@ public class OfferAdministrationWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(descriptionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addOfferBtn))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
+                    .addComponent(discountTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteBtn))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton5))
+                    .addComponent(productsCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addProductBtn)
+                    .addComponent(loadArchiveBtn))
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(backBtn)
+                    .addComponent(jLabel4)
+                    .addComponent(priorityCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void loadArchiveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadArchiveBtnActionPerformed
+        try{
+            fileReader.readArchive("C:\\Users\\Omar\\Desktop\\StoreProject\\src\\archives\\offers.proofer", "Offers", this);
+            JOptionPane.showMessageDialog(this, "Archivo cargado correctamente", "Archivo",
+                            JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+            OfferAdministrationWindow offersWindow = new OfferAdministrationWindow();
+            offersWindow.setVisible(true);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_loadArchiveBtnActionPerformed
+
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        this.dispose();
+        AdministratorMainWindow mainWindow = new AdministratorMainWindow();
+        mainWindow.setVisible(true);
+    }//GEN-LAST:event_backBtnActionPerformed
+
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        if(!notSelected){
+            try{
+                Lists.offers.delete(selected+1);
+                for(int i = 1;i<=Lists.offers.getOfferAt(selected+1).getProducts().listSize();i++){
+                    Lists.offers.getOfferAt(selected+1).getProducts().getProductAt(i).setOffer(null);
+                    JOptionPane.showMessageDialog(this, "Oferta eliminada correctamente", "Eliminada",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+                
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+            } 
+        }else{
+            JOptionPane.showMessageDialog(this, "No ha seleccionado ningun elemento", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_deleteBtnActionPerformed
+
+    private void addOfferBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addOfferBtnActionPerformed
+        try{
+            if(priorityCb.getSelectedItem().equals("Alta")){
+                Lists.offers.addToFinal(descriptionTxt.getText(), Double.valueOf(discountTxt.getText().trim()), currentProducts);
+                JOptionPane.showMessageDialog(this, "Oferta agregada correctamente", "Eliminada",
+                            JOptionPane.INFORMATION_MESSAGE);
+            }else if(priorityCb.getSelectedItem().equals("Baja")){
+                Lists.offers.addToBegin(descriptionTxt.getText(), Double.valueOf(discountTxt.getText().trim()), currentProducts);
+                JOptionPane.showMessageDialog(this, "Oferta agregada correctamente", "Eliminada",
+                            JOptionPane.INFORMATION_MESSAGE);
+            }
+        currentOffer = new Offer(Lists.offers.listSize()-2, descriptionTxt.getText(), 
+                Double.valueOf(discountTxt.getText().trim()), currentProducts);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar agregar la oferta", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+        }
+        for(int i=1; i<=currentProducts.listSize();i++){
+            try {
+                Lists.products.getProductByName(currentProducts.getProductAt(i).getName()).setOffer(currentOffer);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar agregar la oferta", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_addOfferBtnActionPerformed
+
+    private void addProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductBtnActionPerformed
+        if(!productsCb.getSelectedItem().equals("")){
+            try{
+                currentProduct = Lists.products.getProductByName((String) productsCb.getSelectedItem());
+                currentProducts.addToFinal(currentProduct.getIdentifier(), currentProduct.getName(),
+                    currentProduct.getDescription(), currentProduct.getPrice(), currentProduct.getStock(), 
+                        currentProduct.getImageDirection());
+                JOptionPane.showMessageDialog(this, "Producto agregado correctamente", "Eliminada",
+                            JOptionPane.INFORMATION_MESSAGE);
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar agregar el producto", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+            }
+            
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione un producto válido", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_addProductBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -159,18 +329,20 @@ public class OfferAdministrationWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton addOfferBtn;
+    private javax.swing.JButton addProductBtn;
+    private javax.swing.JButton backBtn;
+    private javax.swing.JButton deleteBtn;
+    private javax.swing.JTextField descriptionTxt;
+    private javax.swing.JTextField discountTxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JButton loadArchiveBtn;
+    private javax.swing.JTable offersTable;
+    private javax.swing.JComboBox<String> priorityCb;
+    private javax.swing.JComboBox<String> productsCb;
     // End of variables declaration//GEN-END:variables
 }

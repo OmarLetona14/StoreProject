@@ -50,7 +50,7 @@ public class OfferAdministrationWindow extends javax.swing.JFrame {
     }
     
     private void generateProductsCb(){
-        for(int i=1; i<=Lists.products.listSize();i++){
+        for(int i=1; i<Lists.products.listSize();i++){
             try {
                 productsCb.addItem(Lists.products.getProductAt(i).getName());
             } catch (Exception ex) {
@@ -280,7 +280,7 @@ public class OfferAdministrationWindow extends javax.swing.JFrame {
                 currentProducts.addToFinal(currentProduct.getIdentifier(), currentProduct.getName(),
                     currentProduct.getDescription(), currentProduct.getPrice(), currentProduct.getStock(), 
                         currentProduct.getImageDirection());
-                JOptionPane.showMessageDialog(this, "Producto agregado correctamente", "Eliminada",
+                JOptionPane.showMessageDialog(this, "Producto agregado correctamente", "Agregado",
                             JOptionPane.INFORMATION_MESSAGE);
             }catch(Exception e){
                 JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar agregar el producto", "Error",

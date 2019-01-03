@@ -7,12 +7,16 @@ package storeproject.view;
 
 public class UserMainWindow extends javax.swing.JFrame {
     
-    public static String cartText = "Carrito";
+    public static String cartText;
+    public static double total = 0.0;
     
     public UserMainWindow() {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
+        userNameTxt.setText( "Hola, " + LoginWindow.currentUser.getName());
+        cartText = "Carrito" + "("+total+")";
+        cartBtn.setText(cartText);
     }
 
     /**
@@ -25,13 +29,19 @@ public class UserMainWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         userNameTxt = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        cartBtn = new javax.swing.JButton();
         closeSessionBtn = new javax.swing.JButton();
         productsPanel = new javax.swing.JScrollPane();
-        jButton3 = new javax.swing.JButton();
+        editUserBtn = new javax.swing.JButton();
         allProductsBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        cartBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cartBtnActionPerformed(evt);
+            }
+        });
 
         closeSessionBtn.setText("Cerrar sesión");
         closeSessionBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -40,7 +50,12 @@ public class UserMainWindow extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Modificar");
+        editUserBtn.setText("Modificar");
+        editUserBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editUserBtnActionPerformed(evt);
+            }
+        });
 
         allProductsBtn.setText("Ver todos los productos de la tienda");
         allProductsBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -60,30 +75,31 @@ public class UserMainWindow extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(userNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 309, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(editUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cartBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(closeSessionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(closeSessionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(228, 228, 228)
                 .addComponent(allProductsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(250, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(closeSessionBtn)
-                            .addComponent(jButton3)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(39, 39, 39))
-                    .addComponent(userNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(userNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(closeSessionBtn)
+                        .addComponent(editUserBtn)
+                        .addComponent(cartBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(57, 57, 57)
                 .addComponent(productsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(allProductsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -104,6 +120,18 @@ public class UserMainWindow extends javax.swing.JFrame {
         LoginWindow login = new LoginWindow();
         login.setVisible(true);
     }//GEN-LAST:event_closeSessionBtnActionPerformed
+
+    private void editUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserBtnActionPerformed
+        AddUserWindow editUser = new AddUserWindow(LoginWindow.currentUser.getName(), LoginWindow.currentUser.getEmail(),
+        LoginWindow.currentUser.getNickname(), LoginWindow.currentUser.getPassword(), LoginWindow.currentUser.getCreditCard(),true);
+        editUser.setVisible(true);
+    }//GEN-LAST:event_editUserBtnActionPerformed
+
+    private void cartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cartBtnActionPerformed
+        this.dispose();
+        CartWindow cartWindow = new CartWindow();
+        cartWindow.setVisible(true);
+    }//GEN-LAST:event_cartBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -142,9 +170,9 @@ public class UserMainWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton allProductsBtn;
+    private javax.swing.JButton cartBtn;
     private javax.swing.JButton closeSessionBtn;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton editUserBtn;
     private javax.swing.JScrollPane productsPanel;
     private javax.swing.JLabel userNameTxt;
     // End of variables declaration//GEN-END:variables

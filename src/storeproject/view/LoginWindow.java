@@ -7,11 +7,13 @@ package storeproject.view;
 
 import javax.swing.JOptionPane;
 import storeproject.list.Lists;
+import storeproject.model.Cart;
 import storeproject.model.User;
 
 public class LoginWindow extends javax.swing.JFrame {
     
     public static User currentUser;
+    private Cart userCart;
 
     public LoginWindow() {
         initComponents();
@@ -107,6 +109,7 @@ public class LoginWindow extends javax.swing.JFrame {
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         if(Lists.users.loginSerch(nicknameTxt.getText(), String.valueOf(passwordTxt.getPassword()))){
             currentUser = Lists.users.getUserByNickname(nicknameTxt.getText());
+            currentUser.setCart(new Cart(null, 0));
             if(currentUser.getNickname().equals("ADMIN")){
                 this.dispose();
                 AdministratorMainWindow mainWindow = new AdministratorMainWindow();

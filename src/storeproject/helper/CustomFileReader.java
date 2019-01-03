@@ -21,7 +21,7 @@ public class CustomFileReader {
     
     BufferedReader reader = null;
     FileReader fReader = null;
-    String productsStr, offersStr;
+    String productsStr, offersStr, sinNull;
     Product currentProduct;
     Offer currentOffer;
     RandomNumber random = RandomNumber.getSingletonInstance();
@@ -62,15 +62,15 @@ public class CustomFileReader {
                     for(String product: products){
                         String[] elements = product.split(",");
                         try{
-                            Lists.products.addToFinal(random.generateIdentifier(), elements[0], elements[1],
-                                Double.valueOf(elements[2].trim()), Integer.valueOf(elements[3].trim()), elements[4]);
+                            Lists.products.addToFinal(random.generateIdentifier(), elements[0].replaceAll("null", "").trim(), elements[1].trim(),
+                                Double.valueOf(elements[2].trim()), Integer.valueOf(elements[3].trim()), elements[4].trim());
                         }catch(Exception e){
                             JOptionPane.showMessageDialog(enviroment, "Ocurrió un error, inténtelo de nuevo", "Error",
                                 JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 break;
-                case "Offers":
+                case "Offers":  
                     String[] offers = cadena.split("%");
                     for(String offer: offers){
                         String[] elements = offer.split(",");
@@ -88,26 +88,22 @@ public class CustomFileReader {
                             } 
                         }
                         if(elements[3].equals("Alta")){
-                            Lists.offers.addToFinal(elements[0], Double.valueOf(elements[1]), offeredProducts);
+                            Lists.offers.addToFinal(elements[0].replaceAll("null", "").trim(), Double.valueOf(elements[1]), offeredProducts);
                         }else if(elements[3].equals("Baja")){
-                            Lists.offers.addToBegin(elements[0], Double.valueOf(elements[1]), offeredProducts);
+                            Lists.offers.addToBegin(elements[0].replaceAll("null", "").trim(), Double.valueOf(elements[1]), offeredProducts);
                         }
-                         currentOffer = new Offer(Lists.products.listSize()-2, elements[0], Double.valueOf(elements[1].trim()), offeredProducts);
-                         for(int i = 1; i<=offeredProducts.listSize();i++){
+                        currentOffer = new Offer(Lists.offers.listSize()-1, elements[0], Double.valueOf(elements[1].trim()), offeredProducts);
+                        for(int i = 1; i<=offeredProducts.listSize();i++){
                             try {
                                 offeredProducts.getProductAt(i).setOffer(currentOffer);
                             } catch (Exception ex) {
                                 JOptionPane.showMessageDialog(enviroment, "Ocurrió un error, inténtelo de nuevo", "Error",
                                     JOptionPane.ERROR_MESSAGE);
                             }
-                         }
+                        }
                     } 
                 break;
-            }
-            
+            }  
         }
-    
-    }
-
-    
+    }  
 }

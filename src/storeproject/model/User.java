@@ -13,14 +13,16 @@ public class User {
     private String nickname;
     private String password;
     private CreditCard creditCard;
+    private Cart cart;
 
-    public User(int idUser, String name, String email, String nickname, String password, CreditCard creditCard) {
+    public User(int idUser, String name, String email, String nickname, String password, CreditCard creditCard, Cart cart) {
         this.idUser = idUser;
         this.name = name;
         this.email = email;
         this.nickname = nickname;
         this.password = password;
         this.creditCard = creditCard;
+        this.cart = cart;
     }
 
     public int getIdUser() {
@@ -69,5 +71,13 @@ public class User {
 
     public void setCreditCard(CreditCard creditCard) {
         this.creditCard = creditCard;
-    }  
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
 }

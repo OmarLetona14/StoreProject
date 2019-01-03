@@ -69,6 +69,9 @@ public class SimplyLinkedCircularListProduct {
             if(name.equals(aux.info.getName())){
                 return aux.info;
             }else{
+                if(aux.sig==first){
+                    passed = true;
+                 }
                 aux = aux.sig;
             }
         }

@@ -5,22 +5,48 @@
  */
 package storeproject.view;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import storeproject.list.Lists;
+import storeproject.model.Cart;
+import storeproject.model.CreditCard;
 
-/**
- *
- * @author Omar
- */
 public class AddUserWindow extends javax.swing.JFrame {
-
-    /**
-     * Creates new form AddUserWindow
-     */
+    
+    private boolean modify;
+    
     public AddUserWindow() {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
+    }
+    public AddUserWindow(String name, String email, String nickname, String password, CreditCard creditCard, boolean modify){
+        initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
+        nameTxt.setText(name);
+        emailTxt.setText(email);
+        nicknameTxt.setText(nickname);
+        passwordTxt.setText(password);
+        expirationDateCalendar.setDate(convertToDate(creditCard.getExpirationDate()));
+        CVCCodeTxt.setText(creditCard.getCVCCode());
+        tarjetNameTxt.setText(creditCard.getCreditCardName());
+        this.modify = modify;
+    }
+    
+    private Date convertToDate(String dateStr){
+        Date timeDate=null;
+        DateFormat hourFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            timeDate = hourFormat.parse(dateStr);
+        } catch (ParseException ex) {
+            Logger.getLogger(AddUserWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }return timeDate;
     }
 
     /**
@@ -48,6 +74,7 @@ public class AddUserWindow extends javax.swing.JFrame {
         cancelBtn = new javax.swing.JButton();
         addBtn = new javax.swing.JButton();
         passwordTxt = new javax.swing.JPasswordField();
+        expirationDateCalendar = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,6 +104,11 @@ public class AddUserWindow extends javax.swing.JFrame {
         CVCCodeTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CVCCodeTxtActionPerformed(evt);
+            }
+        });
+        CVCCodeTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                CVCCodeTxtKeyTyped(evt);
             }
         });
 
@@ -110,14 +142,14 @@ public class AddUserWindow extends javax.swing.JFrame {
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(nameTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
-                        .addComponent(emailTxt)
-                        .addComponent(nicknameTxt)
-                        .addComponent(CVCCodeTxt)
-                        .addComponent(tarjetNameTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))
-                    .addComponent(passwordTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(passwordTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                    .addComponent(emailTxt)
+                    .addComponent(nicknameTxt)
+                    .addComponent(CVCCodeTxt)
+                    .addComponent(tarjetNameTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                    .addComponent(expirationDateCalendar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(73, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -148,8 +180,10 @@ public class AddUserWindow extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addComponent(jLabel5)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel6)
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6)
+                    .addComponent(expirationDateCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(CVCCodeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -157,7 +191,7 @@ public class AddUserWindow extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(tarjetNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelBtn)
                     .addComponent(addBtn))
@@ -180,18 +214,47 @@ public class AddUserWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
-        try{
+        if(!modify){
+            try{
+            Date expirationDate = expirationDateCalendar.getDate();
             Lists.users.addToFinal(nameTxt.getText(), emailTxt.getText(), nicknameTxt.getText(),
-                String.valueOf(passwordTxt.getPassword()), tarjetNameTxt.getText(), "", CVCCodeTxt.getText());
+                String.valueOf(passwordTxt.getPassword()), tarjetNameTxt.getText(), getCurrentDate(expirationDate), 
+                CVCCodeTxt.getText());
             JOptionPane.showMessageDialog(this, "Usuario agregado correctamente", "Agregado",
                             JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
-                            JOptionPane.ERROR_MESSAGE);
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            try{
+                Date expirationDate = expirationDateCalendar.getDate();
+                Lists.users.edit(LoginWindow.currentUser.getIdUser(), nameTxt.getText(), emailTxt.getText(), nicknameTxt.getText(),
+                String.valueOf(passwordTxt.getPassword()), tarjetNameTxt.getText(), getCurrentDate(expirationDate), 
+                CVCCodeTxt.getText());
+                JOptionPane.showMessageDialog(this, "Usuario editado correctamente", "Agregado",
+                            JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+            }           
         }
-        
     }//GEN-LAST:event_addBtnActionPerformed
+    
+    private String getCurrentDate(Date currentDate){
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return dateFormat.format(currentDate);
+    }
+    
+    private void CVCCodeTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CVCCodeTxtKeyTyped
+       char validChar = evt.getKeyChar();
+       if(Character.isLetter(validChar)){
+           getToolkit().beep();
+           evt.consume();        
+       }
+    }//GEN-LAST:event_CVCCodeTxtKeyTyped
 
     /**
      * @param args the command line arguments
@@ -233,6 +296,7 @@ public class AddUserWindow extends javax.swing.JFrame {
     private javax.swing.JButton addBtn;
     private javax.swing.JButton cancelBtn;
     private javax.swing.JTextField emailTxt;
+    private com.toedter.calendar.JDateChooser expirationDateCalendar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

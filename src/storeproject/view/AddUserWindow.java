@@ -76,7 +76,7 @@ public class AddUserWindow extends javax.swing.JFrame {
         passwordTxt = new javax.swing.JPasswordField();
         expirationDateCalendar = new com.toedter.calendar.JDateChooser();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Nombre completo");
 

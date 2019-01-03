@@ -5,10 +5,30 @@
  */
 package storeproject.view;
 
-public class UserMainWindow extends javax.swing.JFrame {
+import java.awt.Dimension;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JPanel;
+import storeproject.controller.DescriptionLabel;
+import storeproject.controller.ImageLabel;
+import storeproject.controller.ProductButton;
+import storeproject.list.Lists;
+import storeproject.list.SimplyLinkedCircularListProduct;
+import storeproject.model.Product;
+
+public class UserMainWindow extends javax.swing.JFrame implements Runnable{
     
     public static String cartText;
     public static double total = 0.0;
+    ImageLabel[][] imageLabelMatrix;
+    DescriptionLabel[][] descriptionLabelMatrix;
+    ProductButton[][] productButtonMatrix;
+    SimplyLinkedCircularListProduct offeredProductsList;
+    Product currentProduct;
+    private static boolean verified = false;
+    ProductsWindow productsWindow;
+    int filas, tamaño;
+    JPanel conteiner;
     
     public UserMainWindow() {
         initComponents();
@@ -17,6 +37,64 @@ public class UserMainWindow extends javax.swing.JFrame {
         userNameTxt.setText( "Hola, " + LoginWindow.currentUser.getName());
         cartText = "Carrito" + "("+total+")";
         cartBtn.setText(cartText);
+        boolean loaded;
+        offeredProductsList = new SimplyLinkedCircularListProduct();
+        if(!verified){
+            ProgressWindow progressWindow= new ProgressWindow(true);
+            progressWindow.setVisible(true);
+        }
+        
+        generateOfferedProductsMatrix();
+    }
+    
+    private int generateListSize(){
+        int size=0;
+        for(int i= 1; i<Lists.offers.listSize();i++){
+            try {
+                size += (Lists.offers.getOfferAt(i).getProducts().listSize()-1);
+                for(int j=1; j<Lists.offers.getOfferAt(i).getProducts().listSize(); j++){
+                    currentProduct = Lists.offers.getOfferAt(i).getProducts().getProductAt(j);
+                    offeredProductsList.addToFinal(currentProduct.getIdentifier(), currentProduct.getName(), 
+                            currentProduct.getDescription(), currentProduct.getPrice(), currentProduct.getStock(), 
+                            currentProduct.getImageDirection());
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(UserMainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return size;
+    }
+    
+    private void generateOfferedProductsMatrix(){
+        
+        conteiner = new JPanel();
+        conteiner.setLayout(null);
+        tamaño = generateListSize();
+        filas = (tamaño/4)+1;
+        imageLabelMatrix = new ImageLabel[filas][4];
+        descriptionLabelMatrix = new DescriptionLabel[filas][4];
+        productButtonMatrix = new ProductButton[filas][4];
+        for(int fila = 0; fila<filas; fila++){
+            for(int columna = 0; columna<=3; columna++){
+                if(tamaño!=0){
+                    try {
+                        productButtonMatrix[fila][columna] = new ProductButton((15+190*columna), (180+220*fila),
+                                offeredProductsList.getProductAt(tamaño),false, conteiner, this, cartBtn);
+                        imageLabelMatrix[fila][columna] = new ImageLabel( (15+ 190*columna),  (15 +220*fila), 
+                                offeredProductsList.getProductAt(tamaño), conteiner);
+                        descriptionLabelMatrix[fila][columna] = new DescriptionLabel(15+190*columna, (120+220*fila), 
+                                offeredProductsList.getProductAt(tamaño), conteiner);
+                    } catch (Exception ex) {
+                        Logger.getLogger(ProductsWindow.class.getName()).log(Level.SEVERE, null, ex);
+                    }         
+                    conteiner.setPreferredSize(new Dimension(780, filas*220));
+                    offersPanel .setViewportView(conteiner);
+                    offersPanel .getViewport().setView(conteiner);                    
+                    tamaño--;                   
+                }
+            }
+        }
+    
     }
 
     /**
@@ -31,7 +109,7 @@ public class UserMainWindow extends javax.swing.JFrame {
         userNameTxt = new javax.swing.JLabel();
         cartBtn = new javax.swing.JButton();
         closeSessionBtn = new javax.swing.JButton();
-        productsPanel = new javax.swing.JScrollPane();
+        offersPanel = new javax.swing.JScrollPane();
         editUserBtn = new javax.swing.JButton();
         allProductsBtn = new javax.swing.JButton();
 
@@ -71,16 +149,16 @@ public class UserMainWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(productsPanel)
+                    .addComponent(offersPanel)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(userNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(editUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cartBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cartBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(closeSessionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57)))
+                        .addGap(102, 102, 102)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(228, 228, 228)
@@ -95,12 +173,11 @@ public class UserMainWindow extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(userNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(closeSessionBtn)
-                        .addComponent(editUserBtn)
-                        .addComponent(cartBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(closeSessionBtn, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cartBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editUserBtn))
                 .addGap(57, 57, 57)
-                .addComponent(productsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(offersPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(allProductsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -110,9 +187,16 @@ public class UserMainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void allProductsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allProductsBtnActionPerformed
-        this.dispose();
-        ProductsWindow products = new ProductsWindow();
-        products.setVisible(true);
+
+        if(!verified){
+            this.dispose();
+            new Thread(this).start();
+            productsWindow = new ProductsWindow();
+        }else{ 
+            this.dispose();
+            productsWindow = new ProductsWindow();
+            productsWindow.setVisible(true);
+        }
     }//GEN-LAST:event_allProductsBtnActionPerformed
 
     private void closeSessionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeSessionBtnActionPerformed
@@ -173,7 +257,23 @@ public class UserMainWindow extends javax.swing.JFrame {
     private javax.swing.JButton cartBtn;
     private javax.swing.JButton closeSessionBtn;
     private javax.swing.JButton editUserBtn;
-    private javax.swing.JScrollPane productsPanel;
+    private javax.swing.JScrollPane offersPanel;
     private javax.swing.JLabel userNameTxt;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+        while(!verified){
+            try {
+                if(ProgressWindow.disposed){
+                    productsWindow.setVisible(true);
+                    ProgressWindow.disposed = false;
+                    verified = true;
+                }
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }

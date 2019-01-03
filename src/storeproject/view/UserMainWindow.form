@@ -26,16 +26,16 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="productsPanel" max="32767" attributes="0"/>
+                  <Component id="offersPanel" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="userNameTxt" min="-2" pref="102" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="editUserBtn" min="-2" pref="103" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="cartBtn" min="-2" pref="104" max="-2" attributes="0"/>
+                      <Component id="cartBtn" min="-2" pref="201" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="closeSessionBtn" min="-2" pref="104" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -56,14 +56,12 @@
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="userNameTxt" min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="closeSessionBtn" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="editUserBtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cartBtn" alignment="0" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="closeSessionBtn" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="cartBtn" alignment="0" max="32767" attributes="0"/>
+                  <Component id="editUserBtn" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
-              <Component id="productsPanel" min="-2" pref="398" max="-2" attributes="0"/>
+              <Component id="offersPanel" min="-2" pref="398" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
               <Component id="allProductsBtn" min="-2" pref="23" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -87,7 +85,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="closeSessionBtnActionPerformed"/>
       </Events>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="productsPanel">
+    <Container class="javax.swing.JScrollPane" name="offersPanel">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
     </Container>

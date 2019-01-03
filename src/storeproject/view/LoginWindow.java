@@ -5,20 +5,25 @@
  */
 package storeproject.view;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import storeproject.list.Lists;
 import storeproject.model.Cart;
 import storeproject.model.User;
 
-public class LoginWindow extends javax.swing.JFrame {
+public class LoginWindow extends javax.swing.JFrame implements Runnable{
     
     public static User currentUser;
+    UserMainWindow userMain;
     private Cart userCart;
+    private static boolean verified;
 
     public LoginWindow() {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
+        
     }
 
     /**
@@ -115,9 +120,15 @@ public class LoginWindow extends javax.swing.JFrame {
                 AdministratorMainWindow mainWindow = new AdministratorMainWindow();
                 mainWindow.setVisible(true);
             }else{
-                this.dispose();
-                UserMainWindow userWindow = new UserMainWindow();
-                userWindow.setVisible(true);
+                if(!verified){
+                    this.dispose(); 
+                    new Thread(this).start();
+                    userMain = new UserMainWindow();
+                }else{
+                    userMain = new UserMainWindow();
+                    userMain.setVisible(true);
+                }
+                
             }
         
         }else{
@@ -169,4 +180,21 @@ public class LoginWindow extends javax.swing.JFrame {
     private javax.swing.JPasswordField passwordTxt;
     private javax.swing.JButton registerBtn;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+        while(!verified){
+            try {
+                if(ProgressWindow.disposed){
+                    userMain.setVisible(true);
+                    ProgressWindow.disposed = false;
+                    verified = true;
+                }
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+       
+    }
 }

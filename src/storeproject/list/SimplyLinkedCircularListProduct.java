@@ -44,6 +44,18 @@ public class SimplyLinkedCircularListProduct {
      
     }
     
+    public void addToBegin(int identifier, String name, String description, double price, int stock, String imageDirection){
+        Product product = new Product(size, identifier, name, description, price, stock, imageDirection, null);
+        ProductNodo newNodo = new ProductNodo(product);
+        if (empty()) {
+            first = newNodo;
+        } else{
+            newNodo.sig = first;
+            first = newNodo;
+        }
+        size++;
+    }
+    
     public Product getProductAt(int idRef) throws Exception{
         if(idRef>=1 && !empty()){
             if(idRef==1){

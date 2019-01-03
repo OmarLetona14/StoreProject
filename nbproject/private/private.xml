@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/nodo/UserNodo.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/nodo/CartProductNodo.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/helper/CustomFileReader.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/view/OfferAdministrationWindow.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/model/CreditCard.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/model/User.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/controller/ImageLabel.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/controller/DescriptionLabel.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/view/CartWindow.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/model/Cart.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/view/ProductAdministrationWindow.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/model/Product.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/view/AdministratorMainWindow.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/view/ProductsWindow.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/view/LoginWindow.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/list/SimplyLinkedCircularListProduct.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/list/OfferQueue.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/nodo/ProductNodo.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/model/Offer.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/view/PaymentWindow.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/list/DoubleLinkedCircularListCartProduct.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/list/SimplyLinkedListUser.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/view/AddUserWindow.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/nodo/OfferNodo.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/controller/ProductButton.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/view/UserMainWindow.java</file>
+            <file>file:/C:/Users/Omar/Desktop/StoreProject/src/storeproject/Main.java</file>
+        </group>
+    </open-files>
+</project-private>

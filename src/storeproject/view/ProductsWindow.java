@@ -5,15 +5,23 @@
  */
 package storeproject.view;
 
+import java.awt.Dimension;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JPanel;
+import storeproject.controller.DescriptionLabel;
+import storeproject.controller.ImageLabel;
+import storeproject.controller.ProductButton;
 import storeproject.list.Lists;
-import storeproject.model.ProductPanel;
 
 public class ProductsWindow extends javax.swing.JFrame {
     
-    ProductPanel[][] productsMatrix;
+    ImageLabel[][] imageLabelMatrix;
+    DescriptionLabel[][] descriptionLabelMatrix;
+    ProductButton[][] productButtonMatrix;
     int filas, tamaño;
+    boolean loaded;
+    JPanel conteiner;
     
     public ProductsWindow(){
         initComponents();
@@ -21,24 +29,34 @@ public class ProductsWindow extends javax.swing.JFrame {
         setResizable(false);
         cartBtn.setText(UserMainWindow.cartText);
         generateProductsMatrix();
+        ProgressWindow progressWindow= new ProgressWindow(true);
+        progressWindow.setVisible(true);
         userNameTxt.setText( "Hola, " + LoginWindow.currentUser.getName());
         UserMainWindow.cartText = "Carrito" + "("+UserMainWindow.total+")";
     }
     
     private void generateProductsMatrix(){
+        conteiner = new JPanel();
+        conteiner.setLayout(null);
         tamaño = Lists.products.listSize()-1;
         filas = (tamaño/4)+1;
-        productsMatrix = new ProductPanel[filas][3];
-        for(int fila = 0; fila<=filas; fila++){
+        imageLabelMatrix = new ImageLabel[filas][4];
+        descriptionLabelMatrix = new DescriptionLabel[filas][4];
+        productButtonMatrix = new ProductButton[filas][4];
+        for(int fila = 0; fila<filas; fila++){
             for(int columna = 0; columna<=3; columna++){
                 if(tamaño!=0){
                     try {
-                        productsMatrix[fila][columna] = new ProductPanel(125*fila, 175*columna, Lists.products.getProductAt(tamaño)
-                        );
+                        productButtonMatrix[fila][columna] = new ProductButton((15+190*columna), (180+220*fila),
+                                Lists.products.getProductAt(tamaño),false, conteiner, this, cartBtn);
+                        imageLabelMatrix[fila][columna] = new ImageLabel( (15+ 190*columna),  (15 +220*fila), Lists.products.getProductAt(tamaño), conteiner);
+                        descriptionLabelMatrix[fila][columna] = new DescriptionLabel(15+190*columna, (120+220*fila), Lists.products.getProductAt(tamaño), conteiner);
                     } catch (Exception ex) {
                         Logger.getLogger(ProductsWindow.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    add(productsMatrix[fila][columna]);
+                    }         
+                    conteiner.setPreferredSize(new Dimension(780, filas*220));
+                    scrollProducts .setViewportView(conteiner);
+                    scrollProducts .getViewport().setView(conteiner);                    
                     tamaño--;                   
                 }
             }
@@ -54,15 +72,21 @@ public class ProductsWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jProgressBar1 = new javax.swing.JProgressBar();
         userNameTxt = new javax.swing.JLabel();
         cartBtn = new javax.swing.JButton();
         backBtn = new javax.swing.JButton();
         modifyUserBtn = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrollProducts = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         backBtn.setText("Atrás");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
 
         modifyUserBtn.setText("Modificar");
         modifyUserBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -77,32 +101,30 @@ public class ProductsWindow extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(userNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(modifyUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 309, Short.MAX_VALUE)
-                        .addComponent(cartBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(userNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(modifyUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(185, 185, 185)
+                .addComponent(cartBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(scrollProducts)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(userNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(backBtn)
-                        .addComponent(modifyUserBtn)
-                        .addComponent(cartBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(50, 50, 50)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(userNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(modifyUserBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cartBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(backBtn))
+                .addGap(18, 18, 18)
+                .addComponent(scrollProducts, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -114,6 +136,12 @@ public class ProductsWindow extends javax.swing.JFrame {
         LoginWindow.currentUser.getNickname(), LoginWindow.currentUser.getPassword(), LoginWindow.currentUser.getCreditCard(),true);
         editUser.setVisible(true);
     }//GEN-LAST:event_modifyUserBtnActionPerformed
+
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        this.dispose();
+        UserMainWindow userMain = new UserMainWindow();
+        userMain.setVisible(true);
+    }//GEN-LAST:event_backBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,8 +182,9 @@ public class ProductsWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
     private javax.swing.JButton cartBtn;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JButton modifyUserBtn;
+    private javax.swing.JScrollPane scrollProducts;
     private javax.swing.JLabel userNameTxt;
     // End of variables declaration//GEN-END:variables
 }

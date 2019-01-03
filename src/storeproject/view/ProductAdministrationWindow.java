@@ -98,7 +98,19 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
 
         jLabel3.setText("Precio");
 
+        priceTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                priceTxtKeyTyped(evt);
+            }
+        });
+
         jLabel4.setText("Existencia");
+
+        stockTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                stockTxtKeyTyped(evt);
+            }
+        });
 
         jLabel5.setText("Direccion de la imagen");
 
@@ -313,6 +325,22 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_deleteBtnActionPerformed
+
+    private void priceTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_priceTxtKeyTyped
+        char validChar = evt.getKeyChar();
+        if(Character.isLetter(validChar)){
+            getToolkit().beep();
+            evt.consume();        
+        }
+    }//GEN-LAST:event_priceTxtKeyTyped
+
+    private void stockTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_stockTxtKeyTyped
+        char validChar = evt.getKeyChar();
+        if(Character.isLetter(validChar)){
+            getToolkit().beep();
+            evt.consume();        
+        }
+    }//GEN-LAST:event_stockTxtKeyTyped
 
     /**
      * @param args the command line arguments

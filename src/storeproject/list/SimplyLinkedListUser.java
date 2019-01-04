@@ -27,7 +27,7 @@ public class SimplyLinkedListUser {
     
     public void addToFinal(String name, String email, String nickname, String password, String creditCardName, String expirationDate, String CVCCode){
         CreditCard creditCard = new CreditCard(creditCardName, expirationDate, CVCCode);
-        User user  = new User(size, name, email, nickname, password, creditCard, null);
+        User user  = new User(size, name, email, nickname, password, creditCard, null,null);
         UserNodo newNodo = new UserNodo(user);
         if(empty()){   
             first = newNodo;

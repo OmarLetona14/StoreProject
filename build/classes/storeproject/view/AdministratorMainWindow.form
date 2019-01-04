@@ -29,7 +29,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="offerAdministrationBtn" min="-2" pref="100" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton3" min="-2" pref="103" max="-2" attributes="0"/>
+              <Component id="reportsBtn" min="-2" pref="103" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
           <Group type="102" attributes="0">
@@ -48,7 +48,7 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="productsAdministrationBtn" pref="51" max="32767" attributes="0"/>
                   <Component id="offerAdministrationBtn" max="32767" attributes="0"/>
-                  <Component id="jButton3" max="32767" attributes="0"/>
+                  <Component id="reportsBtn" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="39" max="32767" attributes="0"/>
           </Group>
@@ -72,10 +72,13 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="offerAdministrationBtnActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="reportsBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Reportes"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reportsBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="closeSessionBtn">
       <Properties>

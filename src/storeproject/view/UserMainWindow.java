@@ -188,10 +188,10 @@ public class UserMainWindow extends javax.swing.JFrame implements Runnable{
 
     private void allProductsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allProductsBtnActionPerformed
 
-        if(!verified){
+        if(!verified){ 
             this.dispose();
-            new Thread(this).start();
             productsWindow = new ProductsWindow();
+            new Thread(this).start();
         }else{ 
             this.dispose();
             productsWindow = new ProductsWindow();

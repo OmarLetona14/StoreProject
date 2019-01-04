@@ -14,8 +14,9 @@ public class User {
     private String password;
     private CreditCard creditCard;
     private Cart cart;
+    private Canceled canceled;
 
-    public User(int idUser, String name, String email, String nickname, String password, CreditCard creditCard, Cart cart) {
+    public User(int idUser, String name, String email, String nickname, String password, CreditCard creditCard, Cart cart, Canceled canceled) {
         this.idUser = idUser;
         this.name = name;
         this.email = email;
@@ -23,6 +24,7 @@ public class User {
         this.password = password;
         this.creditCard = creditCard;
         this.cart = cart;
+        this.canceled = canceled;
     }
 
     public int getIdUser() {
@@ -79,5 +81,13 @@ public class User {
 
     public void setCart(Cart cart) {
         this.cart = cart;
+    }
+
+    public Canceled getCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(Canceled canceled) {
+        this.canceled = canceled;
     }
 }

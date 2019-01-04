@@ -81,6 +81,12 @@ public class ProductsWindow extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        cartBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cartBtnActionPerformed(evt);
+            }
+        });
+
         backBtn.setText("Atrás");
         backBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,6 +148,12 @@ public class ProductsWindow extends javax.swing.JFrame {
         UserMainWindow userMain = new UserMainWindow();
         userMain.setVisible(true);
     }//GEN-LAST:event_backBtnActionPerformed
+
+    private void cartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cartBtnActionPerformed
+        this.dispose();
+        CartWindow cartWindow = new CartWindow();
+        cartWindow.setVisible(true);
+    }//GEN-LAST:event_cartBtnActionPerformed
 
     /**
      * @param args the command line arguments

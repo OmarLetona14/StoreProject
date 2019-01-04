@@ -5,12 +5,31 @@
  */
 package storeproject.view;
 
-public class PaymentWindow extends javax.swing.JFrame {
+import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import storeproject.helper.GenerateFile;
+import storeproject.list.Lists;
+import storeproject.model.Bill;
+import storeproject.model.CartTableModel;
+import storeproject.model.CreditCard;
 
+public class PaymentWindow extends javax.swing.JFrame {
+    
+    CartTableModel model = new CartTableModel();
+    int option;
+    CreditCard creditCard;
+    Bill currentBill;
+    
     public PaymentWindow() {
         initComponents();
          setLocationRelativeTo(null);
         setResizable(false);
+        productsTable.setModel(model);
+        userNameTxt.setText( "Hola, " + LoginWindow.currentUser.getName());
     }
 
     /**
@@ -30,18 +49,19 @@ public class PaymentWindow extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        productsTable = new javax.swing.JTable();
+        CVCCodeTxt = new javax.swing.JTextField();
+        tarjetNameTxt = new javax.swing.JTextField();
+        addressTxt = new javax.swing.JTextField();
+        billNameTxt = new javax.swing.JTextField();
+        NitTxt = new javax.swing.JTextField();
+        paymentBtn = new javax.swing.JButton();
+        backBtn = new javax.swing.JButton();
+        expirationDayCalendar = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Tarjeta de credito");
+        jLabel1.setText("CVC Code");
 
         jLabel2.setText("Fecha de vencimiento");
 
@@ -53,7 +73,7 @@ public class PaymentWindow extends javax.swing.JFrame {
 
         jLabel6.setText("Nit");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        productsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -64,17 +84,44 @@ public class PaymentWindow extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(productsTable);
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        CVCCodeTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                CVCCodeTxtActionPerformed(evt);
+            }
+        });
+        CVCCodeTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                CVCCodeTxtKeyTyped(evt);
             }
         });
 
-        jButton1.setText("Pagar");
+        billNameTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                billNameTxtActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Atrás");
+        NitTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                NitTxtKeyTyped(evt);
+            }
+        });
+
+        paymentBtn.setText("Pagar");
+        paymentBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                paymentBtnActionPerformed(evt);
+            }
+        });
+
+        backBtn.setText("Atrás");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -94,18 +141,19 @@ public class PaymentWindow extends javax.swing.JFrame {
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField4)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)))
+                            .addComponent(CVCCodeTxt)
+                            .addComponent(tarjetNameTxt)
+                            .addComponent(addressTxt)
+                            .addComponent(billNameTxt)
+                            .addComponent(NitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                            .addComponent(expirationDayCalendar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(86, 86, 86)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(paymentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(backBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
@@ -116,31 +164,34 @@ public class PaymentWindow extends javax.swing.JFrame {
                 .addGap(75, 75, 75)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CVCCodeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(tarjetNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(addressTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(billNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(NitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(34, 34, 34)
+                        .addComponent(paymentBtn))
+                    .addComponent(expirationDayCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jButton2)
+                .addComponent(backBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -149,9 +200,67 @@ public class PaymentWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void billNameTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_billNameTxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_billNameTxtActionPerformed
+
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_backBtnActionPerformed
+
+    private void paymentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentBtnActionPerformed
+
+        option = JOptionPane.showConfirmDialog(this, "¿Esta seguro que desea realizar la compra?");
+        if(option == JOptionPane.YES_OPTION){
+            try{
+                creditCard = new CreditCard(tarjetNameTxt.getText(),getCurrentDate(expirationDayCalendar.getDate()),CVCCodeTxt.getText() );
+                    Lists.bills.push(LoginWindow.currentUser, creditCard, addressTxt.getText(), billNameTxt.getText(), NitTxt.getText());
+                    JFileChooser fileChooser = new JFileChooser();
+                    int optionChoose = fileChooser.showSaveDialog(this);
+                    if(optionChoose==JFileChooser.APPROVE_OPTION){
+                        currentBill = new Bill(Lists.bills.listSize()-1,LoginWindow.currentUser, creditCard, addressTxt.getText(),
+                                billNameTxt.getText(), NitTxt.getText() );
+                        GenerateFile fileGenerator = new GenerateFile();
+                        File f = fileChooser.getSelectedFile();
+                        fileGenerator.generateBill(f.toString(), currentBill);
+                        JOptionPane.showMessageDialog(this, "Factura generada correctamente", "Generado",
+                            JOptionPane.INFORMATION_MESSAGE);
+                        this.dispose();
+                        UserMainWindow mainWindow = new UserMainWindow();
+                        mainWindow.setVisible(true);
+                    }
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+            }
+            
+        }
+    }//GEN-LAST:event_paymentBtnActionPerformed
+    
+    private String getCurrentDate(Date currentDate){
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return dateFormat.format(currentDate);
+    }
+    
+    private void NitTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NitTxtKeyTyped
+        char validChar = evt.getKeyChar();
+        if(Character.isLetter(validChar)){
+            getToolkit().beep();
+            evt.consume();        
+        }
+    }//GEN-LAST:event_NitTxtKeyTyped
+
+    private void CVCCodeTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CVCCodeTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CVCCodeTxtActionPerformed
+
+    private void CVCCodeTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CVCCodeTxtKeyTyped
+        char validChar = evt.getKeyChar();
+        if(Character.isLetter(validChar)){
+            getToolkit().beep();
+            evt.consume();        
+        }
+    }//GEN-LAST:event_CVCCodeTxtKeyTyped
 
     /**
      * @param args the command line arguments
@@ -189,8 +298,12 @@ public class PaymentWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JTextField CVCCodeTxt;
+    private javax.swing.JTextField NitTxt;
+    private javax.swing.JTextField addressTxt;
+    private javax.swing.JButton backBtn;
+    private javax.swing.JTextField billNameTxt;
+    private com.toedter.calendar.JDateChooser expirationDayCalendar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -198,12 +311,9 @@ public class PaymentWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JButton paymentBtn;
+    private javax.swing.JTable productsTable;
+    private javax.swing.JTextField tarjetNameTxt;
     private javax.swing.JLabel userNameTxt;
     // End of variables declaration//GEN-END:variables
 }

@@ -17,6 +17,9 @@ public class Cart {
         this.total = total;
     }
 
+    public Cart() {
+    }
+
     public SimplyLinkedCircularListProduct getCartProducts() {
         return cartProducts;
     }

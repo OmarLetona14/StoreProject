@@ -67,6 +67,9 @@
     <Component class="javax.swing.JLabel" name="userNameTxt">
     </Component>
     <Component class="javax.swing.JButton" name="cartBtn">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cartBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="backBtn">
       <Properties>

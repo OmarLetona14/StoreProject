@@ -38,7 +38,7 @@ public class OfferTableModel extends AbstractTableModel {
     @Override
     public int getRowCount()
     {
-        return Lists.offers.listSize()-1;
+        return Lists.offers.listSize();
     }
     @Override
     public Object getValueAt(int rowIndex, int columnIndex)
@@ -67,7 +67,7 @@ public class OfferTableModel extends AbstractTableModel {
        Offer instance = (Offer)aValue;
        Offer row = null;
         try {
-            row = Lists.offers.getOfferAt(rowIndex-1); 
+            row = Lists.offers.getOfferAt(rowIndex+1); 
         } catch (Exception ex) {
             Logger.getLogger(ProductTableModel.class.getName()).log(Level.SEVERE, null, ex);
         }

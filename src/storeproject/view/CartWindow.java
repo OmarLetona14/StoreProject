@@ -30,7 +30,7 @@ public class CartWindow extends javax.swing.JFrame {
         
     }
     
-    private void cancelCart(){
+    public static void cancelCart(){
         LoginWindow.currentUser.setCart(new Cart());
         UserMainWindow.cartText = "";
         UserMainWindow.total = 0.0;

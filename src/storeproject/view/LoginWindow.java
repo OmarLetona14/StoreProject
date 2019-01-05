@@ -125,6 +125,7 @@ public class LoginWindow extends javax.swing.JFrame implements Runnable{
                     new Thread(this).start();
                     userMain = new UserMainWindow();
                 }else{
+                    this.dispose();
                     userMain = new UserMainWindow();
                     userMain.setVisible(true);
                 }

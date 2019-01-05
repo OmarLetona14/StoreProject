@@ -18,7 +18,7 @@ import storeproject.model.Product;
 
 public class UserMainWindow extends javax.swing.JFrame implements Runnable{
     
-    public static String cartText;
+    public static String cartText, userText;
     public static double total = 0.0;
     ImageLabel[][] imageLabelMatrix;
     DescriptionLabel[][] descriptionLabelMatrix;
@@ -34,7 +34,8 @@ public class UserMainWindow extends javax.swing.JFrame implements Runnable{
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
-        userNameTxt.setText( "Hola, " + LoginWindow.currentUser.getName());
+        userText =  "Hola, " + LoginWindow.currentUser.getName();
+        userNameTxt.setText(userText);
         cartText = "Carrito" + "("+total+")";
         cartBtn.setText(cartText);
         boolean loaded;
@@ -77,11 +78,11 @@ public class UserMainWindow extends javax.swing.JFrame implements Runnable{
                 if(tamaño!=0){
                     try {
                         productButtonMatrix[fila][columna] = new ProductButton((15+190*columna), (180+220*fila),
-                                offeredProductsList.getProductAt(tamaño),false, conteiner, this, cartBtn);
+                                offeredProductsList.getProductAt(tamaño), conteiner, this, cartBtn);
                         imageLabelMatrix[fila][columna] = new ImageLabel( (15+ 190*columna),  (15 +220*fila), 
                                 offeredProductsList.getProductAt(tamaño), conteiner);
                         descriptionLabelMatrix[fila][columna] = new DescriptionLabel(15+190*columna, (120+220*fila), 
-                                offeredProductsList.getProductAt(tamaño), conteiner);
+                                offeredProductsList.getProductAt(tamaño), conteiner, true);
                     } catch (Exception ex) {
                         Logger.getLogger(ProductsWindow.class.getName()).log(Level.SEVERE, null, ex);
                     }         
@@ -217,7 +218,7 @@ public class UserMainWindow extends javax.swing.JFrame implements Runnable{
     private void editUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserBtnActionPerformed
         AddUserWindow editUser = new AddUserWindow(LoginWindow.currentUser.getName(), LoginWindow.currentUser.getEmail(),
         LoginWindow.currentUser.getNickname(), LoginWindow.currentUser.getPassword(), LoginWindow.currentUser.getCreditCard(),true);
-        editUser.setVisible(true);
+        editUser.setVisible(true); 
     }//GEN-LAST:event_editUserBtnActionPerformed
 
     private void cartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cartBtnActionPerformed
@@ -268,7 +269,7 @@ public class UserMainWindow extends javax.swing.JFrame implements Runnable{
     private javax.swing.JButton editUserBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane offersPanel;
-    private javax.swing.JLabel userNameTxt;
+    public static javax.swing.JLabel userNameTxt;
     // End of variables declaration//GEN-END:variables
 
     @Override

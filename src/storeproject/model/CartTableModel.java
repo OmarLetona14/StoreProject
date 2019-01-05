@@ -38,7 +38,7 @@ public class CartTableModel extends AbstractTableModel{
     public int getRowCount()
     {
         if(LoginWindow.currentUser.getCart().getCartProducts()!=null){
-            return LoginWindow.currentUser.getCart().getCartProducts().listSize()-1;
+            return LoginWindow.currentUser.getCart().getCartProducts().listSize();
         }else{
             return 1;
         }
@@ -74,7 +74,7 @@ public class CartTableModel extends AbstractTableModel{
        Product row = null;
         try {
             if(LoginWindow.currentUser.getCart().getCartProducts()!=null){
-                row = LoginWindow.currentUser.getCart().getCartProducts().getProductAt(rowIndex-1);
+                row = LoginWindow.currentUser.getCart().getCartProducts().getProductAt(rowIndex+1);
             }
         } catch (Exception ex) {
             Logger.getLogger(ProductTableModel.class.getName()).log(Level.SEVERE, null, ex);

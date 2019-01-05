@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import storeproject.helper.CustomFileReader;
 import storeproject.helper.RandomNumber;
 import storeproject.list.Lists;
@@ -82,6 +83,7 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         productsTable = new javax.swing.JTable();
         loadArchiveBtn = new javax.swing.JButton();
+        serchImageBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -164,6 +166,13 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
             }
         });
 
+        serchImageBtn.setText("Buscar...");
+        serchImageBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                serchImageBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -184,13 +193,16 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
                         .addGap(27, 27, 27)
                         .addComponent(nameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(62, 62, 62)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(stockTxt)
-                    .addComponent(imageDirectionTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(stockTxt)
+                            .addComponent(imageDirectionTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)))
+                    .addComponent(serchImageBtn))
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(loadArchiveBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
@@ -226,10 +238,15 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(imageDirectionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(modifyBtn))
-                        .addGap(18, 18, 18)
-                        .addComponent(deleteBtn)
-                        .addGap(18, 18, 18)
-                        .addComponent(loadArchiveBtn)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(deleteBtn)
+                                .addGap(18, 18, 18)
+                                .addComponent(loadArchiveBtn))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addComponent(serchImageBtn)))
                         .addGap(18, 18, 18)
                         .addComponent(backBtn)))
                 .addGap(18, 18, 18)
@@ -351,6 +368,17 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_stockTxtKeyTyped
 
+    private void serchImageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serchImageBtnActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter imageFilter=new FileNameExtensionFilter("Imagenes","jpg","png");
+        fileChooser.setFileFilter(imageFilter);
+        int optionChoose = fileChooser.showOpenDialog(this);
+        if(optionChoose==JFileChooser.APPROVE_OPTION){
+            File f = fileChooser.getSelectedFile();
+            imageDirectionTxt.setText(f.toString());
+        }
+    }//GEN-LAST:event_serchImageBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -404,6 +432,7 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
     private javax.swing.JTextField nameTxt;
     private javax.swing.JTextField priceTxt;
     private javax.swing.JTable productsTable;
+    private javax.swing.JButton serchImageBtn;
     private javax.swing.JTextField stockTxt;
     // End of variables declaration//GEN-END:variables
 }

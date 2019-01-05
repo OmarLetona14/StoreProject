@@ -12,12 +12,19 @@ import storeproject.model.Product;
 
 public class DescriptionLabel extends JLabel{
     
-    public DescriptionLabel(int x, int y, Product product, JPanel enviroment){       
+    public DescriptionLabel(int x, int y, Product product, JPanel enviroment, boolean offer){   
         setSize(160, 75);
         setLocation(x, y);
-        setAlignmentY(CENTER);
-        setText( "<html>"+ product.getDescription() + "<p>" + " Precio: Q"
+        if(!offer){
+            setText( "<html>"+ product.getDescription() + "<p>" + " Precio: Q"
         +product.getPrice()+"</html>");
+        }else{
+            setText( "<html>"+ product.getDescription() + "<p>" + " Precio anterior: Q"
+        +product.getPrice()+"</html>" + "<p>" + "Precio con descuento: Q"+
+                    (product.getPrice()-product.getOffer().getDiscount()));
+        }
+        
+        
         enviroment.add(this);
     }
     

@@ -151,6 +151,7 @@ public class SimplyLinkedCircularListProduct {
                 ProductNodo next = aux.sig.sig;
                 aux.sig = next;
             }
+            passed = false;
             size--;
         }
     }

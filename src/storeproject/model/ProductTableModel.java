@@ -37,7 +37,7 @@ public class ProductTableModel extends AbstractTableModel {
     @Override
     public int getRowCount()
     {
-        return Lists.products.listSize()-1;
+        return Lists.products.listSize();
     }
     @Override
     public Object getValueAt(int rowIndex, int columnIndex)
@@ -76,7 +76,8 @@ public class ProductTableModel extends AbstractTableModel {
        Product instance = (Product)aValue;
        Product row = null;
         try {
-            row = Lists.products.getProductAt(rowIndex-1); 
+            
+            row = Lists.products.getProductAt(rowIndex+1); 
         } catch (Exception ex) {
             Logger.getLogger(ProductTableModel.class.getName()).log(Level.SEVERE, null, ex);
         }

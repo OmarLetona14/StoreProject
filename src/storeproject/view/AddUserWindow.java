@@ -233,6 +233,8 @@ public class AddUserWindow extends javax.swing.JFrame {
                 Lists.users.edit(LoginWindow.currentUser.getIdUser(), nameTxt.getText(), emailTxt.getText(), nicknameTxt.getText(),
                 String.valueOf(passwordTxt.getPassword()), tarjetNameTxt.getText(), getCurrentDate(expirationDate), 
                 CVCCodeTxt.getText());
+                UserMainWindow.userText = "Hola, " + nameTxt.getText();
+                UserMainWindow.userNameTxt.setText(UserMainWindow.userText);
                 JOptionPane.showMessageDialog(this, "Usuario editado correctamente", "Agregado",
                             JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();

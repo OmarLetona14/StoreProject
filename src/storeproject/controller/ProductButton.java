@@ -24,14 +24,8 @@ public class ProductButton extends JButton implements ActionListener {
     private final JFrame window;
     private JButton cartBtn;
     
-    public ProductButton(int x, int y, Product product, boolean offer, JPanel enviroment, JFrame window, JButton cartBtn){
-        if(!offer){
-            setText("Agregar a carrito");
-        }else{
-            nowPrice = String.valueOf(product.getPrice()- product.getOffer().getDiscount());
-            setText("Agregar a carrito"+" antes: "+product.getPrice()+ " ahora: "
-                    +nowPrice);
-        }
+    public ProductButton(int x, int y, Product product, JPanel enviroment, JFrame window, JButton cartBtn){
+        
         this.product = product;
         this.window = window;
         this.cartBtn = cartBtn;

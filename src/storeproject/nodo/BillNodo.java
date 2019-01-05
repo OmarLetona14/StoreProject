@@ -16,5 +16,4 @@ public class BillNodo {
         info = informacion;
         sig = null;
     }
-    
 }

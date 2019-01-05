@@ -23,7 +23,7 @@ public class PaymentWindow extends javax.swing.JFrame {
     CartTableModel model = new CartTableModel();
     int option;
     Product tempProduct, cartProduct;
-    CreditCard creditCard;
+    CreditCard creditCard, userCreditCard;
     Bill currentBill;
     double oldGain, priceProduct;
     
@@ -210,13 +210,25 @@ public class PaymentWindow extends javax.swing.JFrame {
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         this.dispose();
     }//GEN-LAST:event_backBtnActionPerformed
-
+    
+    private boolean verifyCreditcard(CreditCard credicard){
+        userCreditCard = LoginWindow.currentUser.getCreditCard();
+        if(userCreditCard.getCVCCode().equals(credicard.getCVCCode()) &&
+                userCreditCard.getExpirationDate().equals(credicard.getExpirationDate()) && 
+                userCreditCard.getCreditCardName().equals(credicard.getCreditCardName())){
+            return true;
+        }
+        return false;
+    }
+    
     private void paymentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentBtnActionPerformed
 
         option = JOptionPane.showConfirmDialog(this, "¿Esta seguro que desea realizar la compra?");
         if(option == JOptionPane.YES_OPTION){
-            try{
-                creditCard = new CreditCard(tarjetNameTxt.getText(),getCurrentDate(expirationDayCalendar.getDate()),CVCCodeTxt.getText() );
+            creditCard = new CreditCard(tarjetNameTxt.getText(),getCurrentDate(expirationDayCalendar.getDate()),CVCCodeTxt.getText());
+            if(verifyCreditcard(creditCard)){
+                try{
+                
                     Lists.bills.push(LoginWindow.currentUser, creditCard, addressTxt.getText(), billNameTxt.getText(), NitTxt.getText());
                     for(int i=1;i<=LoginWindow.currentUser.getCart().getCartProducts().listSize();i++){
                         tempProduct = LoginWindow.currentUser.getCart().getCartProducts().getProductAt(i);
@@ -238,15 +250,19 @@ public class PaymentWindow extends javax.swing.JFrame {
                         fileGenerator.generateBill(f.toString(), currentBill);
                         JOptionPane.showMessageDialog(this, "Factura generada correctamente", "Generado",
                             JOptionPane.INFORMATION_MESSAGE);
+                        CartWindow.cancelCart();
                         this.dispose();
                         UserMainWindow mainWindow = new UserMainWindow();
                         mainWindow.setVisible(true);
                     }
-            }catch(Exception e){
-                JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
-                                JOptionPane.ERROR_MESSAGE);
+                }catch(Exception e){
+                    JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
+                                    JOptionPane.ERROR_MESSAGE);
+                }
+            }else{
+                JOptionPane.showMessageDialog(this, "Los datos de la tarjeta de credito no coinciden", "Error",
+                                    JOptionPane.ERROR_MESSAGE);
             }
-            
         }
     }//GEN-LAST:event_paymentBtnActionPerformed
     

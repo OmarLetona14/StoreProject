@@ -48,9 +48,9 @@ public class ProductsWindow extends javax.swing.JFrame {
                 if(tamaño!=0){
                     try {
                         productButtonMatrix[fila][columna] = new ProductButton((15+190*columna), (180+220*fila),
-                                Lists.products.getProductAt(tamaño),false, conteiner, this, cartBtn);
+                                Lists.products.getProductAt(tamaño), conteiner, this, cartBtn);
                         imageLabelMatrix[fila][columna] = new ImageLabel( (15+ 190*columna),  (15 +220*fila), Lists.products.getProductAt(tamaño), conteiner);
-                        descriptionLabelMatrix[fila][columna] = new DescriptionLabel(15+190*columna, (120+220*fila), Lists.products.getProductAt(tamaño), conteiner);
+                        descriptionLabelMatrix[fila][columna] = new DescriptionLabel(15+190*columna, (120+220*fila), Lists.products.getProductAt(tamaño), conteiner,false);
                     } catch (Exception ex) {
                         Logger.getLogger(ProductsWindow.class.getName()).log(Level.SEVERE, null, ex);
                     }         

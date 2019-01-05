@@ -95,14 +95,16 @@ public class CustomFileReader {
                             Lists.offers.addToBegin(elements[0].replaceAll("null", "").trim(), Double.valueOf(elements[1]), offeredProducts);
                         }
                         currentOffer = new Offer(Lists.offers.listSize()-1, elements[0], Double.valueOf(elements[1].trim()), offeredProducts);
-                        for(int i = 1; i<=offeredProducts.listSize();i++){
-                            try {
-                                offeredProducts.getProductAt(i).setOffer(currentOffer);
-                            } catch (Exception ex) {
-                                JOptionPane.showMessageDialog(enviroment, "Ocurrió un error, inténtelo de nuevo", "Error",
-                                    JOptionPane.ERROR_MESSAGE);
+                        if(offeredProducts.listSize()>1){
+                            for(int i = 1; i<offeredProducts.listSize();i++){
+                                try {
+                                    offeredProducts.getProductAt(i).setOffer(currentOffer);
+                                } catch (Exception ex) {
+                                    JOptionPane.showMessageDialog(enviroment, "Ocurrió un error, inténtelo de nuevo", "Error",
+                                        JOptionPane.ERROR_MESSAGE);
+                                }
                             }
-                        }
+                        } 
                     } 
                 break;
             }  

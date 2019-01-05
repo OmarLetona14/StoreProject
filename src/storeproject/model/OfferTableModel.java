@@ -38,7 +38,7 @@ public class OfferTableModel extends AbstractTableModel {
     @Override
     public int getRowCount()
     {
-        return Lists.offers.listSize();
+        return Lists.offers.listSize()-1;
     }
     @Override
     public Object getValueAt(int rowIndex, int columnIndex)

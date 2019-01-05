@@ -37,7 +37,7 @@ public class ProductTableModel extends AbstractTableModel {
     @Override
     public int getRowCount()
     {
-        return Lists.products.listSize();
+        return Lists.products.listSize()-1;
     }
     @Override
     public Object getValueAt(int rowIndex, int columnIndex)
@@ -50,23 +50,21 @@ public class ProductTableModel extends AbstractTableModel {
         } catch (Exception ex) {
             Logger.getLogger(ProductTableModel.class.getName()).log(Level.SEVERE, null, ex);
         }if(row!=null){
-            if(0 == columnIndex) {
-            return row.getIdentifier();
-            }
-            else if(1 == columnIndex) {
-                return row.getName();
-            }
-            else if(2 == columnIndex) {
-                return row.getDescription();
-            }
-            else if(3 == columnIndex) {
-                return row.getPrice();
-            }
-            else if(4 == columnIndex) {
-                return row.getStock();
-            }
-            else if(5 == columnIndex) {
-                return row.getImageDirection();
+            switch (columnIndex) {
+                case 0:
+                    return row.getIdentifier();
+                case 1:
+                    return row.getName();
+                case 2:
+                    return row.getDescription();
+                case 3:
+                    return row.getPrice();
+                case 4:
+                    return row.getStock();
+                case 5:
+                    return row.getImageDirection();
+                default:
+                    break;
             }
         }
         

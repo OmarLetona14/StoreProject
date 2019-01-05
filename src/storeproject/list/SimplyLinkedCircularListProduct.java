@@ -143,6 +143,9 @@ public class SimplyLinkedCircularListProduct {
             }else{
                 ProductNodo aux = first;
                 while(aux.sig.info.getIdProduct()!=idRef && !passed){
+                    if(aux.sig==first){
+                        passed = true;
+                    }
                     aux = aux.sig;
                 }
                 ProductNodo next = aux.sig.sig;

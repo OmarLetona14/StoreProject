@@ -8,7 +8,6 @@ package storeproject.model;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
-import storeproject.list.Lists;
 import storeproject.view.LoginWindow;
 
 public class CartTableModel extends AbstractTableModel{
@@ -39,7 +38,7 @@ public class CartTableModel extends AbstractTableModel{
     public int getRowCount()
     {
         if(LoginWindow.currentUser.getCart().getCartProducts()!=null){
-            return LoginWindow.currentUser.getCart().getCartProducts().listSize();
+            return LoginWindow.currentUser.getCart().getCartProducts().listSize()-1;
         }else{
             return 1;
         }

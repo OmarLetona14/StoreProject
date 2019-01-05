@@ -16,13 +16,16 @@ import storeproject.list.Lists;
 import storeproject.model.Bill;
 import storeproject.model.CartTableModel;
 import storeproject.model.CreditCard;
+import storeproject.model.Product;
 
 public class PaymentWindow extends javax.swing.JFrame {
     
     CartTableModel model = new CartTableModel();
     int option;
+    Product tempProduct, cartProduct;
     CreditCard creditCard;
     Bill currentBill;
+    double oldGain, priceProduct;
     
     public PaymentWindow() {
         initComponents();
@@ -215,6 +218,16 @@ public class PaymentWindow extends javax.swing.JFrame {
             try{
                 creditCard = new CreditCard(tarjetNameTxt.getText(),getCurrentDate(expirationDayCalendar.getDate()),CVCCodeTxt.getText() );
                     Lists.bills.push(LoginWindow.currentUser, creditCard, addressTxt.getText(), billNameTxt.getText(), NitTxt.getText());
+                    for(int i=1;i<=LoginWindow.currentUser.getCart().getCartProducts().listSize();i++){
+                        tempProduct = LoginWindow.currentUser.getCart().getCartProducts().getProductAt(i);
+                        LoginWindow.currentUser.getPurchasedProducts().addToFinal(tempProduct.getIdentifier(), tempProduct.getName(), 
+                                tempProduct.getDescription(), tempProduct.getPrice(), tempProduct.getStock(), tempProduct.getImageDirection());
+                    }
+                    for(int y=1;y<=LoginWindow.currentUser.getCart().getCartProducts().listSize();y++){
+                        oldGain = Lists.products.getProductByName(LoginWindow.currentUser.getCart().getCartProducts().getProductAt(y).getName()).getGain();
+                        priceProduct = Lists.products.getProductByName(LoginWindow.currentUser.getCart().getCartProducts().getProductAt(y).getName()).getPrice();
+                        Lists.products.getProductByName(LoginWindow.currentUser.getCart().getCartProducts().getProductAt(y).getName()).setGain(oldGain+priceProduct);
+                    }
                     JFileChooser fileChooser = new JFileChooser();
                     int optionChoose = fileChooser.showSaveDialog(this);
                     if(optionChoose==JFileChooser.APPROVE_OPTION){

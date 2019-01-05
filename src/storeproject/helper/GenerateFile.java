@@ -5,35 +5,49 @@
  */
 package storeproject.helper;
 
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 import storeproject.list.Lists;
+import storeproject.list.SimplyLinkedCircularListProduct;
 import storeproject.model.Bill;
+import storeproject.model.Offer;
 import storeproject.model.Product;
 import storeproject.model.User;
+import storeproject.view.GraphicWindow;
 
 public class GenerateFile {
     
     String articles = "";
-    Product currentProduct;
-    User currentUser;
+    Product currentProduct, tempProduct, graphicProduct;
+    User currentUser, billUser;
+    FileWriter filewriter = null;
+    PrintWriter printw = null;
+    Bill currentBill;
+    Offer currentOffer;
+    int[] numbers;
     
     public void generateBill(String route, Bill bill){
         try {
             String text;
-            FileOutputStream archive = new FileOutputStream(route+ ".pdf");
-            Document document = new Document();
-            PdfWriter.getInstance(document, archive);
-            document.open();
+            PdfWriter writter = new PdfWriter(route+ ".pdf");
+            PdfDocument pdfDoc = new PdfDocument(writter);
+            Document document = new Document(pdfDoc);
             text  = "Factura de compra " + "\n\n"+
                     "Nombre: " + bill.getName() + "\n"+ 
                     "Direccion: " + bill.getAddress() + "\n" +
@@ -58,11 +72,34 @@ public class GenerateFile {
         return articles;
     }
     
-    public void generateCanceledPaymentReport(String route) throws DocumentException, FileNotFoundException{
-        FileOutputStream archive;
-        archive = new FileOutputStream(route+ ".pdf");
-        Document document = new Document();
-        PdfWriter.getInstance(document, archive);
+    public void generateProductsPerUserReport() throws IOException, Exception{
+        filewriter = new FileWriter("C:\\Users\\Omar\\Desktop\\StoreProject\\reports\\Productos comprados por cada usuario.html");
+        printw = new PrintWriter(filewriter);
+        
+        printw.println("<html>");
+        printw.println("<head><title>Listado de productos comprados por usuario</title></head>");
+        printw.println("<body>");
+        for(int i=1; i<=Lists.users.listSize();i++){
+            billUser = Lists.users.getUserAt(i);
+            if(billUser.getPurchasedProducts().listSize()>1){
+                printw.println("<center><h1><font color=\"navy\">USUARIO: "+ billUser.getName()+ "</font></h1></center>");   
+                for(int x = 1; x<=billUser.getPurchasedProducts().listSize();x++){
+
+                    tempProduct = billUser.getPurchasedProducts().getProductAt(x);
+                    printw.println("<center><h3><font color=\"black\">Producto: "+ 
+                            tempProduct.getName()+ "</font></h3></center>"); 
+                }
+            } 
+        }
+        printw.println("</body>");
+        printw.println("</html>");
+        printw.close();  
+    }
+    
+    public void generateCanceledPaymentReport(String route) throws FileNotFoundException{
+        PdfWriter writter = new PdfWriter(route+ ".pdf");
+        PdfDocument pdfDoc = new PdfDocument(writter);
+        Document document = new Document(pdfDoc);
         Table canceledTable = new Table(new float[]{5,5});
         canceledTable.addHeaderCell(new Cell().add("Usuario"));
         canceledTable.addHeaderCell(new Cell().add("Veces cancelada"));
@@ -73,14 +110,76 @@ public class GenerateFile {
             } catch (Exception ex) {
                 Logger.getLogger(GenerateFile.class.getName()).log(Level.SEVERE, null, ex);
             }  
-            if(currentUser.getCanceled().isCanceled()){
-                    
+            if(currentUser.getCanceled().isCanceled()){        
                canceledTable.addCell(new Cell().add(currentUser.getName()));
+               canceledTable.addCell(new Cell().add(String.valueOf(currentUser.getCanceled().getNoCanceled())));
             }         
-        }
-        document.open();          
-        document.add((Element) canceledTable);
+        }        
+        document.add(canceledTable);
         document.close();
     }
     
+     private static void burbuja(int[] arreglo){
+        for(int i = 0; i < arreglo.length - 1; i++){
+            for(int j = 0; j < arreglo.length - 1; j++){
+                if (arreglo[j] < arreglo[j + 1]){
+                    int tmp = arreglo[j+1];
+                    arreglo[j+1] = arreglo[j];
+                    arreglo[j] = tmp;
+                }
+            }
+        }
+    }
+     
+     private int usedMatrixPointer(){
+         int count=0;
+         for(int i: numbers){
+             if(i!=0){
+                 count++;
+             }
+         }return count;
+     }
+
+    public void generateGraphic() throws Exception{
+        JFreeChart graphic;
+        numbers = new int[9];
+        DefaultCategoryDataset data = new DefaultCategoryDataset();
+        for(int i=1;i<=Lists.products.listSize();i++){
+            numbers[i-1] = (int)Lists.products.getProductAt(i).getGain();
+        }
+        burbuja(numbers);      
+        for(int x=1; x<=11;x++){
+            graphicProduct = Lists.products.getProductByGain(numbers[x]);
+            if(graphicProduct!=null){
+                data.addValue(graphicProduct.getGain(), "10 productos más vendidos", graphicProduct.getName());               
+            }
+        }
+        graphic = ChartFactory.createBarChart("Top 10 productos más vendidos", 
+                "Productos", "Ganancias(Q)", data, PlotOrientation.VERTICAL, true, true, false);
+        
+        ChartPanel panel = new ChartPanel(graphic);
+        GraphicWindow grafico = new GraphicWindow(panel);
+        grafico.setVisible(true);
+    }
+    
+    public void generateProductsWithOffer() throws FileNotFoundException, Exception{
+        PdfWriter writter = new PdfWriter("C:\\Users\\Omar\\Desktop\\StoreProject\\reports\\Productos con oferta.pdf");
+        PdfDocument pdfDoc = new PdfDocument(writter);
+        Document document = new Document(pdfDoc);
+        Table offeredTable = new Table(new float[]{5,5});
+        offeredTable.addHeaderCell(new Cell().add("Oferta"));
+        offeredTable.addHeaderCell(new Cell().add("Producto"));
+        offeredTable.setWidth(100);   
+        for(int i=1;i<=Lists.offers.listSize();i++){
+            currentOffer = Lists.offers.getOfferAt(i);
+            for(int x=1;x<=currentOffer.getProducts().listSize();x++){
+                offeredTable.addCell(new Cell().add(currentOffer.getDescription()));
+                offeredTable.addCell(new Cell().add(currentOffer.getProducts().getProductAt(x).getName()));
+            }   
+        }      
+        document.add(offeredTable);
+        document.close();
+        
+        
+    }
 }

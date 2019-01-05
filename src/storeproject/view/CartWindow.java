@@ -173,7 +173,7 @@ public class CartWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelCartBtnActionPerformed
 
     /**
-     * @param args the command line arguments
+     * @param args the comm and line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

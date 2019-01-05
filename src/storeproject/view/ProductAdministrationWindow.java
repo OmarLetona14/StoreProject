@@ -7,8 +7,10 @@ package storeproject.view;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import storeproject.helper.CustomFileReader;
 import storeproject.helper.RandomNumber;
@@ -260,17 +262,24 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void loadArchiveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadArchiveBtnActionPerformed
-        try{
-            fileReader.readArchive("C:\\Users\\Omar\\Desktop\\StoreProject\\src\\archives\\products.proadd", "Products", this);
-            JOptionPane.showMessageDialog(this, "Archivo cargado correctamente", "Agregado",
-                            JOptionPane.INFORMATION_MESSAGE);
-            loadArchiveBtn.setEnabled(false);
-            this.dispose();
-            ProductAdministrationWindow productsWindow = new ProductAdministrationWindow();
-            productsWindow.setVisible(true);
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
-                            JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione el archivo", "Archivo",
+                                JOptionPane.INFORMATION_MESSAGE);
+        JFileChooser fileChooser = new JFileChooser();
+        int optionChoose = fileChooser.showOpenDialog(this);
+        if(optionChoose==JFileChooser.APPROVE_OPTION){
+            File f = fileChooser.getSelectedFile();
+            try{
+                fileReader.readArchive(f.toString(), "Products", this);
+                JOptionPane.showMessageDialog(this, "Archivo cargado correctamente", "Agregado",
+                                JOptionPane.INFORMATION_MESSAGE);
+                loadArchiveBtn.setEnabled(false);
+                this.dispose();
+                ProductAdministrationWindow productsWindow = new ProductAdministrationWindow();
+                productsWindow.setVisible(true);
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+            }                      
         }
     }//GEN-LAST:event_loadArchiveBtnActionPerformed
 

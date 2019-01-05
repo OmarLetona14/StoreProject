@@ -78,14 +78,16 @@ public class CustomFileReader {
                         offeredProducts = new SimplyLinkedCircularListProduct();
                         for(String individualProduct: eleProducts){
                             currentProduct = Lists.products.getProductByName(individualProduct); 
-                            try{
-                                offeredProducts.addToFinal(currentProduct.getIdentifier(), currentProduct.getName(), 
+                            if(currentProduct!=null){
+                                try{
+                                    offeredProducts.addToFinal(currentProduct.getIdentifier(), currentProduct.getName(), 
                                     currentProduct.getDescription(), currentProduct.getPrice(), currentProduct.getStock(),
                                     currentProduct.getImageDirection());
-                            }catch(Exception e){
-                                JOptionPane.showMessageDialog(enviroment, "Ocurrió un error, inténtelo de nuevo", "Error",
-                                    JOptionPane.ERROR_MESSAGE);
-                            } 
+                                }catch(Exception e){
+                                    JOptionPane.showMessageDialog(enviroment, "Ocurrió un error, inténtelo de nuevo", "Error",
+                                        JOptionPane.ERROR_MESSAGE);
+                                } 
+                            }
                         }
                         if(elements[3].equals("Alta")){
                             Lists.offers.addToFinal(elements[0].replaceAll("null", "").trim(), Double.valueOf(elements[1]), offeredProducts);

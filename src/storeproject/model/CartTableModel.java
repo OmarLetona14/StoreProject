@@ -38,7 +38,12 @@ public class CartTableModel extends AbstractTableModel{
     @Override
     public int getRowCount()
     {
-        return Lists.offers.listSize();
+        if(LoginWindow.currentUser.getCart().getCartProducts()!=null){
+            return LoginWindow.currentUser.getCart().getCartProducts().listSize();
+        }else{
+            return 1;
+        }
+        
     }
     @Override
     public Object getValueAt(int rowIndex, int columnIndex)

@@ -23,7 +23,7 @@ public class LoginWindow extends javax.swing.JFrame implements Runnable{
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
-        
+        currentUser = null;
     }
 
     /**
@@ -112,14 +112,14 @@ public class LoginWindow extends javax.swing.JFrame implements Runnable{
     }//GEN-LAST:event_registerBtnActionPerformed
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        if(Lists.users.loginSerch(nicknameTxt.getText(), String.valueOf(passwordTxt.getPassword()))){
-            currentUser = Lists.users.getUserByNickname(nicknameTxt.getText());
-            currentUser.setCart(new Cart(null, 0));
-            if(currentUser.getNickname().equals("ADMIN")){
+        if(Lists.users.loginSerch(nicknameTxt.getText(), String.valueOf(passwordTxt.getPassword()))){ 
+            if(Lists.users.getUserByNickname(nicknameTxt.getText()).getNickname().equals("ADMIN")){
                 this.dispose();
                 AdministratorMainWindow mainWindow = new AdministratorMainWindow();
                 mainWindow.setVisible(true);
             }else{
+                currentUser = Lists.users.getUserByNickname(nicknameTxt.getText());
+                currentUser.setCart(new Cart(null, 0));
                 if(!verified){
                     this.dispose(); 
                     new Thread(this).start();

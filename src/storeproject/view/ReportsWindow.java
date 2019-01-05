@@ -28,17 +28,27 @@ public class ReportsWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        productsPerUserBtn = new javax.swing.JButton();
+        Top10Btn = new javax.swing.JButton();
         canceledPaymentsBtn = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        productsWithOfferBtn = new javax.swing.JButton();
+        backBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Productos comprados por cada usuario");
+        productsPerUserBtn.setText("Productos comprados por cada usuario");
+        productsPerUserBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                productsPerUserBtnActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("10 productos más vendidos ");
+        Top10Btn.setText("10 productos más vendidos ");
+        Top10Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Top10BtnActionPerformed(evt);
+            }
+        });
 
         canceledPaymentsBtn.setText("Usuarios que han cancelado sus compras");
         canceledPaymentsBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -47,41 +57,47 @@ public class ReportsWindow extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Productos con ofertas");
+        productsWithOfferBtn.setText("Productos con ofertas");
+        productsWithOfferBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                productsWithOfferBtnActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("Atrás");
+        backBtn.setText("Atrás");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(canceledPaymentsBtn)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(productsWithOfferBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(canceledPaymentsBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+                    .addComponent(Top10Btn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(productsPerUserBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addComponent(jButton1)
+                .addComponent(productsPerUserBtn)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(Top10Btn)
                 .addGap(18, 18, 18)
                 .addComponent(canceledPaymentsBtn)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(productsWithOfferBtn)
                 .addGap(18, 18, 18)
-                .addComponent(jButton5)
+                .addComponent(backBtn)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -98,6 +114,45 @@ public class ReportsWindow extends javax.swing.JFrame {
                                 JOptionPane.ERROR_MESSAGE);
        }   
     }//GEN-LAST:event_canceledPaymentsBtnActionPerformed
+
+    private void productsPerUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productsPerUserBtnActionPerformed
+        try{
+            fileGenerator.generateProductsPerUserReport();
+            JOptionPane.showMessageDialog(this, "Reporte generado correctamente", "Generado",
+                            JOptionPane.INFORMATION_MESSAGE);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_productsPerUserBtnActionPerformed
+
+    private void productsWithOfferBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productsWithOfferBtnActionPerformed
+        try{
+            fileGenerator.generateProductsWithOffer();
+            JOptionPane.showMessageDialog(this, "Reporte generado correctamente", "Generado",
+                            JOptionPane.INFORMATION_MESSAGE);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_productsWithOfferBtnActionPerformed
+
+    private void Top10BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Top10BtnActionPerformed
+        try{
+            fileGenerator.generateGraphic();
+            JOptionPane.showMessageDialog(this, "Reporte generado correctamente", "Generado",
+                            JOptionPane.INFORMATION_MESSAGE);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_Top10BtnActionPerformed
+
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        this.dispose();
+        AdministratorMainWindow main = new AdministratorMainWindow();
+        main.setVisible(true);
+    }//GEN-LAST:event_backBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -135,10 +190,10 @@ public class ReportsWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Top10Btn;
+    private javax.swing.JButton backBtn;
     private javax.swing.JButton canceledPaymentsBtn;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton productsPerUserBtn;
+    private javax.swing.JButton productsWithOfferBtn;
     // End of variables declaration//GEN-END:variables
 }

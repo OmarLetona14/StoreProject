@@ -7,8 +7,10 @@ package storeproject.view;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import storeproject.helper.CustomFileReader;
 import storeproject.list.Lists;
@@ -207,17 +209,27 @@ public class OfferAdministrationWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loadArchiveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadArchiveBtnActionPerformed
-        try{
-            fileReader.readArchive("C:\\Users\\Omar\\Desktop\\StoreProject\\src\\archives\\offers.proofer", "Offers", this);
-            JOptionPane.showMessageDialog(this, "Archivo cargado correctamente", "Archivo",
-                            JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
-            OfferAdministrationWindow offersWindow = new OfferAdministrationWindow();
-            offersWindow.setVisible(true);
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
-                            JOptionPane.ERROR_MESSAGE);
+        
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione el archivo", "Archivo",
+                                JOptionPane.INFORMATION_MESSAGE);
+        JFileChooser fileChooser = new JFileChooser();
+        int optionChoose = fileChooser.showOpenDialog(this);
+        if(optionChoose==JFileChooser.APPROVE_OPTION){
+            File f = fileChooser.getSelectedFile();
+            try{
+                fileReader.readArchive(f.toString(), "Offers", this);
+                JOptionPane.showMessageDialog(this, "Archivo cargado correctamente", "Archivo",
+                                JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+                OfferAdministrationWindow offersWindow = new OfferAdministrationWindow();
+                offersWindow.setVisible(true);
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+            }                     
         }
+        
+        
     }//GEN-LAST:event_loadArchiveBtnActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed

@@ -15,8 +15,9 @@ public class Product {
     private int stock;
     private String imageDirection;
     private Offer offer;
+    private double gain;
 
-    public Product(int idProduct, int identifier, String name, String description, double price, int stock, String imageDirection, Offer offer) {
+    public Product(int idProduct, int identifier, String name, String description, double price, int stock, String imageDirection, Offer offer, double gain) {
         this.idProduct = idProduct;
         this.identifier = identifier;
         this.name = name;
@@ -25,6 +26,7 @@ public class Product {
         this.stock = stock;
         this.imageDirection = imageDirection;
         this.offer = offer;
+        this.gain = gain;
     }
 
     public int getIdProduct() {
@@ -89,5 +91,13 @@ public class Product {
 
     public void setOffer(Offer offer) {
         this.offer = offer;
-    }   
+    }
+
+    public double getGain() {
+        return gain;
+    }
+
+    public void setGain(double gain) {
+        this.gain = gain;
+    }
 }

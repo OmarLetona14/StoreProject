@@ -5,6 +5,8 @@
  */
 package storeproject.model;
 
+import storeproject.list.SimplyLinkedCircularListProduct;
+
 public class User {
     
     private int idUser;
@@ -15,8 +17,9 @@ public class User {
     private CreditCard creditCard;
     private Cart cart;
     private Canceled canceled;
+    private SimplyLinkedCircularListProduct purchasedProducts;
 
-    public User(int idUser, String name, String email, String nickname, String password, CreditCard creditCard, Cart cart, Canceled canceled) {
+    public User(int idUser, String name, String email, String nickname, String password, CreditCard creditCard, Cart cart, Canceled canceled, SimplyLinkedCircularListProduct purchasedProducts) {
         this.idUser = idUser;
         this.name = name;
         this.email = email;
@@ -25,6 +28,7 @@ public class User {
         this.creditCard = creditCard;
         this.cart = cart;
         this.canceled = canceled;
+        this.purchasedProducts = purchasedProducts;
     }
 
     public int getIdUser() {
@@ -89,5 +93,13 @@ public class User {
 
     public void setCanceled(Canceled canceled) {
         this.canceled = canceled;
+    }
+
+    public SimplyLinkedCircularListProduct getPurchasedProducts() {
+        return purchasedProducts;
+    }
+
+    public void setPurchasedProducts(SimplyLinkedCircularListProduct purchasedProducts) {
+        this.purchasedProducts = purchasedProducts;
     }
 }

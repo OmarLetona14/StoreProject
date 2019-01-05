@@ -27,7 +27,7 @@ public class DoubleLinkedCircularListCartProduct {
     }
     
     public void addToFinal(int identifier, String name, String description, double price, int stock, String imageDirection, Offer offer){
-        Product product = new Product(size, identifier, name, description, price, stock, imageDirection, offer);
+        Product product = new Product(size, identifier, name, description, price, stock, imageDirection, offer, 0);
         CartProductNodo nuevo = new CartProductNodo(product);
         if(empty()){
             actual = nuevo;  

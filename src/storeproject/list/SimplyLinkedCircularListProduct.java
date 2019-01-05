@@ -28,7 +28,7 @@ public class SimplyLinkedCircularListProduct {
     }
     
     public void addToFinal(int identifier, String name, String description, double price, int stock, String imageDirection){
-        Product product = new Product(size, identifier, name, description, price, stock, imageDirection, null);
+        Product product = new Product(size, identifier, name, description, price, stock, imageDirection, null,0);
         ProductNodo newNodo = new ProductNodo(product);
         if(empty()){   
             first = newNodo;
@@ -45,7 +45,7 @@ public class SimplyLinkedCircularListProduct {
     }
     
     public void addToBegin(int identifier, String name, String description, double price, int stock, String imageDirection){
-        Product product = new Product(size, identifier, name, description, price, stock, imageDirection, null);
+        Product product = new Product(size, identifier, name, description, price, stock, imageDirection, null,0);
         ProductNodo newNodo = new ProductNodo(product);
         if (empty()) {
             first = newNodo;
@@ -79,6 +79,21 @@ public class SimplyLinkedCircularListProduct {
         ProductNodo aux = first;
         while(aux != null && !passed){
             if(name.equals(aux.info.getName())){
+                return aux.info;
+            }else{
+                if(aux.sig==first){
+                    passed = true;
+                 }
+                aux = aux.sig;
+            }
+        }
+        return null;
+    }
+    
+    public Product getProductByGain(int gain){
+        ProductNodo aux = first;
+        while(aux != null && !passed){
+            if(gain == (int)aux.info.getGain()){
                 return aux.info;
             }else{
                 if(aux.sig==first){

@@ -6,6 +6,7 @@
 package storeproject.view;
 
 import javax.swing.JOptionPane;
+import storeproject.list.Lists;
 import storeproject.model.Canceled;
 import storeproject.model.Cart;
 import storeproject.model.CartTableModel;
@@ -160,8 +161,11 @@ public class CartWindow extends javax.swing.JFrame {
  
         if(LoginWindow.currentUser.getCanceled()==null){
             newCanceled = new Canceled(true, 1);
+            Lists.users.getUserByNickname(LoginWindow.currentUser.getNickname()).setCanceled(newCanceled);
         }else{
             LoginWindow.currentUser.getCanceled().setNoCanceled(LoginWindow.currentUser.getCanceled().getNoCanceled() + 1);
+            Lists.users.getUserByNickname(LoginWindow.currentUser.getNickname()).getCanceled().setNoCanceled(
+            Lists.users.getUserByNickname(LoginWindow.currentUser.getNickname()).getCanceled().getNoCanceled()+1);
         }              
         
         JOptionPane.showMessageDialog(this, "Carrito vaciado", "Agregado",

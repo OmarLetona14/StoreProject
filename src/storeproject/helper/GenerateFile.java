@@ -78,21 +78,24 @@ public class GenerateFile {
         printw.println("<html>");
         printw.println("<head><title>Listado de productos comprados por usuario</title></head>");
         printw.println("<body>");
-        for(int i=1; i<=Lists.users.listSize();i++){
+        for(int i=1; i<Lists.users.listSize();i++){
             billUser = Lists.users.getUserAt(i);
-            if(billUser.getPurchasedProducts().listSize()>1){
+            if(billUser!=null){
+                if(billUser.getPurchasedProducts().listSize()>1){
                 printw.println("<center><h1><font color=\"navy\">USUARIO: "+ billUser.getName()+ "</font></h1></center>");   
-                for(int x = 1; x<billUser.getPurchasedProducts().listSize();x++){
-
+                    for(int x = 1; x<billUser.getPurchasedProducts().listSize();x++){
                     tempProduct = billUser.getPurchasedProducts().getProductAt(x);
-                    printw.println("<center><h3><font color=\"black\">Producto: "+ 
+                        if(tempProduct!=null){
+                            printw.println("<center><h3><font color=\"black\">Producto: "+ 
                             tempProduct.getName()+ "</font></h3></center>"); 
-                }
-            } 
-        }
+                        }
+                    }
+                } 
+            }
+        }     
         printw.println("</body>");
         printw.println("</html>");
-        printw.close();  
+        printw.close();
     }
     
     public void generateCanceledPaymentReport(String route) throws FileNotFoundException{
@@ -100,19 +103,19 @@ public class GenerateFile {
         PdfDocument pdfDoc = new PdfDocument(writter);
         Document document = new Document(pdfDoc);
         Table canceledTable = new Table(new float[]{5,5});
-        canceledTable.addHeaderCell(new Cell().add("Usuario"));
-        canceledTable.addHeaderCell(new Cell().add("Veces cancelada"));
+        canceledTable.addHeaderCell(new Cell().add(new Paragraph("Usuario")));
+        canceledTable.addHeaderCell(new Cell().add(new Paragraph("Veces cancelada")));
         canceledTable.setWidth(100);    
-        for(int i=1; i<= Lists.users.listSize(); i++){
+        for(int i=1; i< Lists.users.listSize(); i++){
             try {
                 currentUser = Lists.users.getUserAt(i);
             } catch (Exception ex) {
                 Logger.getLogger(GenerateFile.class.getName()).log(Level.SEVERE, null, ex);
-            }  
-            if(currentUser.getCanceled().isCanceled()){        
-               canceledTable.addCell(new Cell().add(currentUser.getName()));
-               canceledTable.addCell(new Cell().add(String.valueOf(currentUser.getCanceled().getNoCanceled())));
-            }         
+            } 
+            if(currentUser.getCanceled()!=null){
+                canceledTable.addCell(new Cell().add(new Paragraph(currentUser.getName())));
+                canceledTable.addCell(new Cell().add(new Paragraph(String.valueOf(currentUser.getCanceled().getNoCanceled()))));
+            }           
         }        
         document.add(canceledTable);
         document.close();
@@ -166,19 +169,21 @@ public class GenerateFile {
         PdfDocument pdfDoc = new PdfDocument(writter);
         Document document = new Document(pdfDoc);
         Table offeredTable = new Table(new float[]{5,5});
-        offeredTable.addHeaderCell(new Cell().add("Oferta"));
-        offeredTable.addHeaderCell(new Cell().add("Producto"));
+        offeredTable.addHeaderCell(new Cell().add(new Paragraph("Oferta")));
+        offeredTable.addHeaderCell(new Cell().add(new Paragraph("Producto")));
         offeredTable.setWidth(100);   
-        for(int i=1;i<=Lists.offers.listSize();i++){
+        for(int i=1;i<Lists.offers.listSize();i++){
             currentOffer = Lists.offers.getOfferAt(i);
-            for(int x=1;x<=currentOffer.getProducts().listSize();x++){
-                offeredTable.addCell(new Cell().add(currentOffer.getDescription()));
-                offeredTable.addCell(new Cell().add(currentOffer.getProducts().getProductAt(x).getName()));
+            if(currentOffer!=null){
+                for(int x=1;x<currentOffer.getProducts().listSize();x++){
+                    if(currentOffer.getProducts().listSize()>1){
+                        offeredTable.addCell(new Cell().add(new Paragraph(currentOffer.getDescription())));
+                        offeredTable.addCell(new Cell().add(new Paragraph(currentOffer.getProducts().getProductAt(x).getName())));
+                    }   
+                }
             }   
         }      
         document.add(offeredTable);
-        document.close();
-        
-        
+        document.close();  
     }
 }

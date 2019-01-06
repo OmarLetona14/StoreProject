@@ -78,7 +78,7 @@ public class ProductButton extends JButton implements ActionListener {
                 UserMainWindow.total += product.getPrice();
                 UserMainWindow.cartText = "Carrito" + "("+UserMainWindow.total+")";
                 cartBtn.setText(UserMainWindow.cartText);
-            }            
+            }             
         }catch(Exception ex){
             JOptionPane.showMessageDialog(window, "Ocurrió un error, inténtelo de nuevo", "Error",
                                 JOptionPane.ERROR_MESSAGE);

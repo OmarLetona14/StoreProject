@@ -25,7 +25,7 @@ public class ProductButton extends JButton implements ActionListener {
     private JButton cartBtn;
     
     public ProductButton(int x, int y, Product product, JPanel enviroment, JFrame window, JButton cartBtn){
-        
+        setText("Agregar a carrito");
         this.product = product;
         this.window = window;
         this.cartBtn = cartBtn;
@@ -41,7 +41,7 @@ public class ProductButton extends JButton implements ActionListener {
         try{
             if(LoginWindow.currentUser.getCart().getCartProducts()!=null){
                LoginWindow.currentUser.getCart().getCartProducts().addToFinal(product.getIdentifier(), product.getName(), product.getDescription(), 
-                   product.getPrice(), product.getStock(), product.getImageDirection());
+                   product.getPrice(), product.getStock(), product.getImageDirection(), product.getOffer());
            
              LoginWindow.currentUser.getCart().setTotal(LoginWindow.currentUser.getCart().getTotal()+product.getPrice());
              
@@ -50,7 +50,7 @@ public class ProductButton extends JButton implements ActionListener {
             }else{
                 cartProduct = new SimplyLinkedCircularListProduct();
                 cartProduct.addToFinal(product.getIdentifier(), product.getName(), product.getDescription(), 
-                        product.getPrice(), product.getStock(), product.getImageDirection());
+                        product.getPrice(), product.getStock(), product.getImageDirection(), product.getOffer());
                 LoginWindow.currentUser.getCart().setCartProducts(cartProduct);
                 LoginWindow.currentUser.getCart().setTotal(LoginWindow.currentUser.getCart().getTotal()+product.getPrice());
                 JOptionPane.showMessageDialog(window, "Se agregó al carrito", "Agregado",

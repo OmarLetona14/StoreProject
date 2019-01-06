@@ -259,7 +259,7 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
     private void addProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductBtnActionPerformed
         try{
             Lists.products.addToFinal(random.generateIdentifier(), nameTxt.getText(), descriptionTxt.getText(), 
-                Double.valueOf(priceTxt.getText()), Integer.valueOf(stockTxt.getText()), imageDirectionTxt.getText());
+                Double.valueOf(priceTxt.getText()), Integer.valueOf(stockTxt.getText()), imageDirectionTxt.getText(),null);
             JOptionPane.showMessageDialog(this, "Producto agregado correctamente", "Agregado",
                             JOptionPane.INFORMATION_MESSAGE);
             this.dispose();

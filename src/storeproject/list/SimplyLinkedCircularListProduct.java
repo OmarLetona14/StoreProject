@@ -27,8 +27,8 @@ public class SimplyLinkedCircularListProduct {
         return(first==null);
     }
     
-    public void addToFinal(int identifier, String name, String description, double price, int stock, String imageDirection){
-        Product product = new Product(size, identifier, name, description, price, stock, imageDirection, null,0);
+    public void addToFinal(int identifier, String name, String description, double price, int stock, String imageDirection, Offer offer){
+        Product product = new Product(size, identifier, name, description, price, stock, imageDirection, offer,0);
         ProductNodo newNodo = new ProductNodo(product);
         if(empty()){   
             first = newNodo;

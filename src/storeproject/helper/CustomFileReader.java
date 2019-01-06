@@ -63,7 +63,7 @@ public class CustomFileReader {
                         String[] elements = product.split(",");
                         try{
                             Lists.products.addToFinal(random.generateIdentifier(), elements[0].replaceAll("null", "").trim(), elements[1].trim(),
-                                Double.valueOf(elements[2].trim()), Integer.valueOf(elements[3].trim()), elements[4].trim());
+                                Double.valueOf(elements[2].trim()), Integer.valueOf(elements[3].trim()), elements[4].trim(),null);
                         }catch(Exception e){
                             JOptionPane.showMessageDialog(enviroment, "Ocurrió un error, inténtelo de nuevo", "Error",
                                 JOptionPane.ERROR_MESSAGE);
@@ -82,7 +82,7 @@ public class CustomFileReader {
                                 try{
                                     offeredProducts.addToFinal(currentProduct.getIdentifier(), currentProduct.getName(), 
                                     currentProduct.getDescription(), currentProduct.getPrice(), currentProduct.getStock(),
-                                    currentProduct.getImageDirection());
+                                    currentProduct.getImageDirection(), currentProduct.getOffer());
                                 }catch(Exception e){
                                     JOptionPane.showMessageDialog(enviroment, "Ocurrió un error, inténtelo de nuevo", "Error",
                                         JOptionPane.ERROR_MESSAGE);
@@ -99,6 +99,7 @@ public class CustomFileReader {
                             for(int i = 1; i<offeredProducts.listSize();i++){
                                 try {
                                     offeredProducts.getProductAt(i).setOffer(currentOffer);
+                                    Lists.products.getProductByName(offeredProducts.getProductAt(i).getName()).setOffer(currentOffer);
                                 } catch (Exception ex) {
                                     JOptionPane.showMessageDialog(enviroment, "Ocurrió un error, inténtelo de nuevo", "Error",
                                         JOptionPane.ERROR_MESSAGE);

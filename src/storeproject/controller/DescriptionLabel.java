@@ -20,8 +20,8 @@ public class DescriptionLabel extends JLabel{
         +product.getPrice()+"</html>");
         }else{
             setText( "<html>"+ product.getDescription() + "<p>" + " Precio anterior: Q"
-        +product.getPrice()+"</html>" + "<p>" + "Precio con descuento: Q"+
-                    (product.getPrice()-product.getOffer().getDiscount()));
+        +product.getPrice() + "<p>" + "Precio con descuento: Q"+
+                    (product.getPrice()-product.getOffer().getDiscount())+"</html>");
         }
         
         

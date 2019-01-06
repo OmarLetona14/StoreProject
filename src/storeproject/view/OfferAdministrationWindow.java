@@ -291,7 +291,7 @@ public class OfferAdministrationWindow extends javax.swing.JFrame {
                 currentProduct = Lists.products.getProductByName((String) productsCb.getSelectedItem());
                 currentProducts.addToFinal(currentProduct.getIdentifier(), currentProduct.getName(),
                     currentProduct.getDescription(), currentProduct.getPrice(), currentProduct.getStock(), 
-                        currentProduct.getImageDirection());
+                        currentProduct.getImageDirection(), currentProduct.getOffer());
                 JOptionPane.showMessageDialog(this, "Producto agregado correctamente", "Agregado",
                             JOptionPane.INFORMATION_MESSAGE);
             }catch(Exception e){

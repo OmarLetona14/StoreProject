@@ -56,7 +56,7 @@ public class UserMainWindow extends javax.swing.JFrame implements Runnable{
                     currentProduct = Lists.offers.getOfferAt(i).getProducts().getProductAt(j);
                     offeredProductsList.addToFinal(currentProduct.getIdentifier(), currentProduct.getName(), 
                             currentProduct.getDescription(), currentProduct.getPrice(), currentProduct.getStock(), 
-                            currentProduct.getImageDirection());
+                            currentProduct.getImageDirection(), currentProduct.getOffer());
                 }
             } catch (Exception ex) {
                 Logger.getLogger(UserMainWindow.class.getName()).log(Level.SEVERE, null, ex);
@@ -81,7 +81,7 @@ public class UserMainWindow extends javax.swing.JFrame implements Runnable{
                                 offeredProductsList.getProductAt(tamaño), conteiner, this, cartBtn);
                         imageLabelMatrix[fila][columna] = new ImageLabel( (15+ 190*columna),  (15 +220*fila), 
                                 offeredProductsList.getProductAt(tamaño), conteiner);
-                        descriptionLabelMatrix[fila][columna] = new DescriptionLabel(15+190*columna, (120+220*fila), 
+                        descriptionLabelMatrix[fila][columna] = new DescriptionLabel(15+190*columna, (110+220*fila), 
                                 offeredProductsList.getProductAt(tamaño), conteiner, true);
                     } catch (Exception ex) {
                         Logger.getLogger(ProductsWindow.class.getName()).log(Level.SEVERE, null, ex);

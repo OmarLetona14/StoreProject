@@ -75,7 +75,6 @@ public class GenerateFile {
     public void generateProductsPerUserReport() throws IOException, Exception{
         filewriter = new FileWriter("C:\\Users\\Omar\\Desktop\\StoreProject\\reports\\Productos comprados por cada usuario.html");
         printw = new PrintWriter(filewriter);
-        
         printw.println("<html>");
         printw.println("<head><title>Listado de productos comprados por usuario</title></head>");
         printw.println("<body>");
@@ -83,7 +82,7 @@ public class GenerateFile {
             billUser = Lists.users.getUserAt(i);
             if(billUser.getPurchasedProducts().listSize()>1){
                 printw.println("<center><h1><font color=\"navy\">USUARIO: "+ billUser.getName()+ "</font></h1></center>");   
-                for(int x = 1; x<=billUser.getPurchasedProducts().listSize();x++){
+                for(int x = 1; x<billUser.getPurchasedProducts().listSize();x++){
 
                     tempProduct = billUser.getPurchasedProducts().getProductAt(x);
                     printw.println("<center><h3><font color=\"black\">Producto: "+ 

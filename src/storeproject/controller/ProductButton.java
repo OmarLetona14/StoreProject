@@ -23,12 +23,14 @@ public class ProductButton extends JButton implements ActionListener {
     private final Product product;
     private final JFrame window;
     private JButton cartBtn;
+    private boolean offered;
     
-    public ProductButton(int x, int y, Product product, JPanel enviroment, JFrame window, JButton cartBtn){
+    public ProductButton(int x, int y, Product product, JPanel enviroment, JFrame window, JButton cartBtn, boolean offered){
         setText("Agregar a carrito");
         this.product = product;
         this.window = window;
         this.cartBtn = cartBtn;
+        this.offered = offered;
         setSize(160, 25);
         setLocation(x, y);
         addActionListener(this);
@@ -40,31 +42,47 @@ public class ProductButton extends JButton implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         try{
             if(LoginWindow.currentUser.getCart().getCartProducts()!=null){
-               LoginWindow.currentUser.getCart().getCartProducts().addToFinal(product.getIdentifier(), product.getName(), product.getDescription(), 
+                if(offered){
+                    LoginWindow.currentUser.getCart().getCartProducts().addToFinal(product.getIdentifier(), product.getName(), product.getDescription(), 
+                   product.getPrice() - product.getOffer().getDiscount(), product.getStock(), product.getImageDirection(), product.getOffer());
+                    
+                }else{
+                    LoginWindow.currentUser.getCart().getCartProducts().addToFinal(product.getIdentifier(), product.getName(), product.getDescription(), 
                    product.getPrice(), product.getStock(), product.getImageDirection(), product.getOffer());
-           
-             LoginWindow.currentUser.getCart().setTotal(LoginWindow.currentUser.getCart().getTotal()+product.getPrice());
-             
+                    LoginWindow.currentUser.getCart().setTotal(LoginWindow.currentUser.getCart().getTotal()+product.getPrice());
+                }
            JOptionPane.showMessageDialog(window, "Se agregó al carrito", "Agregado",
                             JOptionPane.INFORMATION_MESSAGE);
             }else{
                 cartProduct = new SimplyLinkedCircularListProduct();
-                cartProduct.addToFinal(product.getIdentifier(), product.getName(), product.getDescription(), 
+                if(offered){
+                    cartProduct.addToFinal(product.getIdentifier(), product.getName(), product.getDescription(), 
+                            product.getPrice()- product.getOffer().getDiscount(), product.getStock(), product.getImageDirection(), product.getOffer());
+                LoginWindow.currentUser.getCart().setTotal(LoginWindow.currentUser.getCart().getTotal()+(product.getPrice()- product.getOffer().getDiscount()));
+                }else{
+                    cartProduct.addToFinal(product.getIdentifier(), product.getName(), product.getDescription(), 
                         product.getPrice(), product.getStock(), product.getImageDirection(), product.getOffer());
+                    LoginWindow.currentUser.getCart().setTotal(LoginWindow.currentUser.getCart().getTotal()+product.getPrice());
+                }
+                
                 LoginWindow.currentUser.getCart().setCartProducts(cartProduct);
-                LoginWindow.currentUser.getCart().setTotal(LoginWindow.currentUser.getCart().getTotal()+product.getPrice());
+                
                 JOptionPane.showMessageDialog(window, "Se agregó al carrito", "Agregado",
                             JOptionPane.INFORMATION_MESSAGE);
             }
-            UserMainWindow.total += product.getPrice();
-            UserMainWindow.cartText = "Carrito" + "("+UserMainWindow.total+")";
-            cartBtn.setText(UserMainWindow.cartText);
+            if(offered){
+                UserMainWindow.total += (product.getPrice()-product.getOffer().getDiscount());
+                UserMainWindow.cartText = "Carrito" + "("+UserMainWindow.total+")";
+                cartBtn.setText(UserMainWindow.cartText);
+            }else{
+                UserMainWindow.total += product.getPrice();
+                UserMainWindow.cartText = "Carrito" + "("+UserMainWindow.total+")";
+                cartBtn.setText(UserMainWindow.cartText);
+            }            
         }catch(Exception ex){
             JOptionPane.showMessageDialog(window, "Ocurrió un error, inténtelo de nuevo", "Error",
                                 JOptionPane.ERROR_MESSAGE);
         }
-       
-       
     }
     
 }

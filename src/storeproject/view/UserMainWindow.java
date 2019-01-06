@@ -78,7 +78,7 @@ public class UserMainWindow extends javax.swing.JFrame implements Runnable{
                 if(tamaño!=0){
                     try {
                         productButtonMatrix[fila][columna] = new ProductButton((15+190*columna), (180+220*fila),
-                                offeredProductsList.getProductAt(tamaño), conteiner, this, cartBtn);
+                                offeredProductsList.getProductAt(tamaño), conteiner, this, cartBtn, true);
                         imageLabelMatrix[fila][columna] = new ImageLabel( (15+ 190*columna),  (15 +220*fila), 
                                 offeredProductsList.getProductAt(tamaño), conteiner);
                         descriptionLabelMatrix[fila][columna] = new DescriptionLabel(15+190*columna, (110+220*fila), 

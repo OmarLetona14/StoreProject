@@ -40,6 +40,7 @@ public class GenerateFile {
     PrintWriter printw = null;
     Bill currentBill;
     Offer currentOffer;
+    int count;
     int[] numbers;
     
     public void generateBill(String route, Bill bill){
@@ -144,17 +145,21 @@ public class GenerateFile {
 
     public void generateGraphic() throws Exception{
         JFreeChart graphic;
-        numbers = new int[9];
+        numbers = new int[100];
         DefaultCategoryDataset data = new DefaultCategoryDataset();
-        for(int i=1;i<=Lists.products.listSize();i++){
+        for(int i=1;i<Lists.products.listSize();i++){
+            
             numbers[i-1] = (int)Lists.products.getProductAt(i).getGain();
+            
         }
         burbuja(numbers);      
-        for(int x=1; x<=11;x++){
-            graphicProduct = Lists.products.getProductByGain(numbers[x]);
-            if(graphicProduct!=null){
-                data.addValue(graphicProduct.getGain(), "10 productos más vendidos", graphicProduct.getName());               
-            }
+        for(int x=1; x<=usedMatrixPointer();x++){
+            if(x<12){
+                graphicProduct = Lists.products.getProductByGain(numbers[x-1]);
+                if(graphicProduct!=null){
+                    data.addValue(graphicProduct.getGain(), "10 productos más vendidos", graphicProduct.getName());               
+                }
+            } 
         }
         graphic = ChartFactory.createBarChart("Top 10 productos más vendidos", 
                 "Productos", "Ganancias(Q)", data, PlotOrientation.VERTICAL, true, true, false);

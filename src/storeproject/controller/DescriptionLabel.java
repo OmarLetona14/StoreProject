@@ -7,7 +7,6 @@ package storeproject.controller;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import storeproject.model.Product;
 
 public class DescriptionLabel extends JLabel{

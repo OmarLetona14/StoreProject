@@ -79,12 +79,12 @@ public class GenerateFile {
         printw.println("<html>");
         printw.println("<head><title>Listado de productos comprados por usuario</title></head>");
         printw.println("<body>");
-        for(int i=1; i<Lists.users.listSize();i++){
+        for(int i=1; i<(Lists.users.listSize()-1);i++){
             billUser = Lists.users.getUserAt(i);
             if(billUser!=null){
                 if(billUser.getPurchasedProducts().listSize()>1){
                 printw.println("<center><h1><font color=\"navy\">USUARIO: "+ billUser.getName()+ "</font></h1></center>");   
-                    for(int x = 1; x<billUser.getPurchasedProducts().listSize();x++){
+                    for(int x = 1; x<(billUser.getPurchasedProducts().listSize()-1);x++){
                     tempProduct = billUser.getPurchasedProducts().getProductAt(x);
                         if(tempProduct!=null){
                             printw.println("<center><h3><font color=\"black\">Producto: "+ 
@@ -103,9 +103,9 @@ public class GenerateFile {
         PdfWriter writter = new PdfWriter(route+ ".pdf");
         PdfDocument pdfDoc = new PdfDocument(writter);
         Document document = new Document(pdfDoc);
-        Table canceledTable = new Table(new float[]{5,5});
+        Table canceledTable = new Table(new float[]{10,10});
         canceledTable.addHeaderCell(new Cell().add(new Paragraph("Usuario")));
-        canceledTable.addHeaderCell(new Cell().add(new Paragraph("Veces cancelada")));
+        canceledTable.addHeaderCell(new Cell().add(new Paragraph("No. Cancelaciones")));
         canceledTable.setWidth(100);    
         for(int i=1; i< Lists.users.listSize(); i++){
             try {
@@ -148,14 +148,12 @@ public class GenerateFile {
         numbers = new int[100];
         DefaultCategoryDataset data = new DefaultCategoryDataset();
         for(int i=1;i<Lists.products.listSize();i++){
-            
-            numbers[i-1] = (int)Lists.products.getProductAt(i).getGain();
-            
+            numbers[i-1] = (int)Lists.products.getProductAt(i).getGain();  
         }
         burbuja(numbers);      
-        for(int x=1; x<=usedMatrixPointer();x++){
-            if(x<12){
-                graphicProduct = Lists.products.getProductByGain(numbers[x-1]);
+        for(int x=0; x<=usedMatrixPointer();x++){
+            if(x<10){
+                graphicProduct = Lists.products.getProductByGain(numbers[x]);
                 if(graphicProduct!=null){
                     data.addValue(graphicProduct.getGain(), "10 productos más vendidos", graphicProduct.getName());               
                 }
@@ -163,7 +161,6 @@ public class GenerateFile {
         }
         graphic = ChartFactory.createBarChart("Top 10 productos más vendidos", 
                 "Productos", "Ganancias(Q)", data, PlotOrientation.VERTICAL, true, true, false);
-        
         ChartPanel panel = new ChartPanel(graphic);
         GraphicWindow grafico = new GraphicWindow(panel);
         grafico.setVisible(true);
@@ -173,9 +170,12 @@ public class GenerateFile {
         PdfWriter writter = new PdfWriter("C:\\Users\\Omar\\Desktop\\StoreProject\\reports\\Productos con oferta.pdf");
         PdfDocument pdfDoc = new PdfDocument(writter);
         Document document = new Document(pdfDoc);
-        Table offeredTable = new Table(new float[]{5,5});
+        Table offeredTable = new Table(new float[]{10,10});
         offeredTable.addHeaderCell(new Cell().add(new Paragraph("Oferta")));
         offeredTable.addHeaderCell(new Cell().add(new Paragraph("Producto")));
+        offeredTable.addHeaderCell(new Cell().add(new Paragraph("Descuento")));
+        offeredTable.addHeaderCell(new Cell().add(new Paragraph("Precio normal")));
+        offeredTable.addHeaderCell(new Cell().add(new Paragraph("Precio con descuento")));
         offeredTable.setWidth(100);   
         for(int i=1;i<Lists.offers.listSize();i++){
             currentOffer = Lists.offers.getOfferAt(i);
@@ -184,6 +184,11 @@ public class GenerateFile {
                     if(currentOffer.getProducts().listSize()>1){
                         offeredTable.addCell(new Cell().add(new Paragraph(currentOffer.getDescription())));
                         offeredTable.addCell(new Cell().add(new Paragraph(currentOffer.getProducts().getProductAt(x).getName())));
+                        offeredTable.addCell(new Cell().add(new Paragraph(String.valueOf(currentOffer.getDiscount()))));
+                        offeredTable.addCell(new Cell().add(new Paragraph(
+                                String.valueOf(currentOffer.getProducts().getProductAt(x).getPrice()))));
+                        offeredTable.addCell(new Cell().add(new Paragraph(
+                                String.valueOf(currentOffer.getProducts().getProductAt(x).getPrice() - currentOffer.getDiscount()))));
                     }   
                 }
             }   

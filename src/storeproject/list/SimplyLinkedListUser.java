@@ -41,7 +41,6 @@ public class SimplyLinkedListUser {
             aux.sig = newNodo;           
         }
        size++;
-     
     }
     
     public boolean loginSerch(String nicknameRef, String passwordRef){
@@ -71,6 +70,7 @@ public class SimplyLinkedListUser {
         }
         return null;
     }
+    
     public User getUserByNickname(String nickname){
         UserNodo aux = first;
         while(aux != null){
@@ -126,22 +126,6 @@ public class SimplyLinkedListUser {
                 aux.sig = next;
             }
             size--;
-        }
-    }
-    
-    public void print(){
-        
-        UserNodo temp = first;
-        
-        while(temp != null){
-
-            System.out.println("Actual: "+temp.info.getIdUser());
-            if(temp.sig != null){
-                System.out.println("Siguiente: "+temp.sig.info.getIdUser());
-            }
-            System.out.println("-----------------------------");
-            
-            temp = temp.sig;
         }
     }
 }

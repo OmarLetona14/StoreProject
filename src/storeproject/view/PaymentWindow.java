@@ -209,26 +209,23 @@ public class PaymentWindow extends javax.swing.JFrame {
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         this.dispose();
+        UserMainWindow userWindow = new UserMainWindow();
+        userWindow.setVisible(true);
     }//GEN-LAST:event_backBtnActionPerformed
     
     private boolean verifyCreditcard(CreditCard credicard){
         userCreditCard = LoginWindow.currentUser.getCreditCard();
-        if(userCreditCard.getCVCCode().equals(credicard.getCVCCode()) &&
-                userCreditCard.getExpirationDate().equals(credicard.getExpirationDate()) && 
-                userCreditCard.getCreditCardName().equals(credicard.getCreditCardName())){
-            return true;
-        }
-        return false;
+        return userCreditCard.getCVCCode().equals(credicard.getCVCCode()) &&
+                userCreditCard.getExpirationDate().equals(credicard.getExpirationDate()) &&
+                userCreditCard.getCreditCardName().equals(credicard.getCreditCardName());
     }
     
     private void paymentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentBtnActionPerformed
-
         option = JOptionPane.showConfirmDialog(this, "¿Esta seguro que desea realizar la compra?");
         if(option == JOptionPane.YES_OPTION){
             creditCard = new CreditCard(tarjetNameTxt.getText(),getCurrentDate(expirationDayCalendar.getDate()),CVCCodeTxt.getText());
             if(verifyCreditcard(creditCard)){
                 try{
-                
                     Lists.bills.push(LoginWindow.currentUser, creditCard, addressTxt.getText(), billNameTxt.getText(), NitTxt.getText());
                     for(int i=1;i<=LoginWindow.currentUser.getCart().getCartProducts().listSize();i++){
                         tempProduct = LoginWindow.currentUser.getCart().getCartProducts().getProductAt(i);

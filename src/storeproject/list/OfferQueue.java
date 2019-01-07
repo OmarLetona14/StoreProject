@@ -38,7 +38,6 @@ public class OfferQueue {
             aux.sig = newNodo;           
         }
        size++;
-     
     }
     
     public void addToBegin(String description, double discount, SimplyLinkedCircularListProduct products){
@@ -96,21 +95,4 @@ public class OfferQueue {
             size--;
         }
     }
-    
-    public void print(){
-        
-        OfferNodo temp = first;
-        
-        while(temp != null){
-
-            System.out.println("Actual: "+temp.info.getIdOffer());
-            if(temp.sig != null){
-                System.out.println("Siguiente: "+temp.sig.info.getIdOffer());
-            }
-            System.out.println("-----------------------------");
-            
-            temp = temp.sig;
-        }
-    }
-    
 }

@@ -93,26 +93,4 @@ public class DoubleLinkedCircularListCartProduct {
             size--;
         }
     }
-     
-    public void print(){
-        
-        CartProductNodo temp = actual;
-        
-        while(temp != null && !passed){
-            if(temp.ant != null){
-                System.out.println("Anterior: "+temp.ant.product.getIdProduct());
-            }
-            System.out.println("Actual: "+temp.product.getIdProduct());
-            if(temp.sig != null){
-                System.out.println("Siguiente: "+temp.sig.product.getIdProduct());
-            }
-            System.out.println("-----------------------------");
-            if(temp.sig==actual){
-                passed = true;
-            }
-            temp = temp.sig;
-        }
-        passed = false;
-        
-    }
 }

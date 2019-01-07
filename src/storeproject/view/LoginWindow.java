@@ -120,6 +120,9 @@ public class LoginWindow extends javax.swing.JFrame implements Runnable{
             }else{
                 currentUser = Lists.users.getUserByNickname(nicknameTxt.getText());
                 currentUser.setCart(new Cart(null, 0));
+                UserMainWindow.total = 0.0;
+                UserMainWindow.cartText = "";
+                UserMainWindow.userText = "";
                 if(!verified){
                     this.dispose(); 
                     new Thread(this).start();
@@ -129,9 +132,7 @@ public class LoginWindow extends javax.swing.JFrame implements Runnable{
                     userMain = new UserMainWindow();
                     userMain.setVisible(true);
                 }
-                
             }
-        
         }else{
             JOptionPane.showMessageDialog(this, "Credenciales incorrectas", "Error",
                             JOptionPane.ERROR_MESSAGE);

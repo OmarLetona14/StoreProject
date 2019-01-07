@@ -9,11 +9,9 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import storeproject.model.Product;
 
 public class ImageLabel extends JLabel {
-    
     
     public ImageLabel(int x, int y, Product product, JPanel enviroment){
         setSize(160, 90);
@@ -23,5 +21,4 @@ public class ImageLabel extends JLabel {
         setIcon(backgroundImageScaled);
         enviroment.add(this);
     }
-    
 }

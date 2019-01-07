@@ -35,7 +35,6 @@ public class ProductButton extends JButton implements ActionListener {
         setLocation(x, y);
         addActionListener(this);
         enviroment.add(this);
-    
     }
 
     @Override
@@ -51,7 +50,7 @@ public class ProductButton extends JButton implements ActionListener {
                    product.getPrice(), product.getStock(), product.getImageDirection(), product.getOffer());
                     LoginWindow.currentUser.getCart().setTotal(LoginWindow.currentUser.getCart().getTotal()+product.getPrice());
                 }
-           JOptionPane.showMessageDialog(window, "Se agregó al carrito", "Agregado",
+                JOptionPane.showMessageDialog(window, "Se agregó al carrito", "Agregado",
                             JOptionPane.INFORMATION_MESSAGE);
             }else{
                 cartProduct = new SimplyLinkedCircularListProduct();

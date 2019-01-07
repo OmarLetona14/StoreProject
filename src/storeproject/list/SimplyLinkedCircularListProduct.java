@@ -41,7 +41,6 @@ public class SimplyLinkedCircularListProduct {
             newNodo.sig = first;
         }
        size++;
-     
     }
     
     public void addToBegin(int identifier, String name, String description, double price, int stock, String imageDirection){
@@ -133,7 +132,6 @@ public class SimplyLinkedCircularListProduct {
             aux.info.setStock(stock);
             aux.info.setImageDirection(imageDirection);
         }
-    
     }
    
     public void delete(int idRef){
@@ -155,21 +153,4 @@ public class SimplyLinkedCircularListProduct {
             size--;
         }
     }
-    
-    public void print(){
-        
-        ProductNodo temp = first;
-        
-        while(temp != null){
-
-            System.out.println("Actual: "+temp.info.getIdProduct());
-            if(temp.sig != null){
-                System.out.println("Siguiente: "+temp.sig.info.getIdProduct());
-            }
-            System.out.println("-----------------------------");
-            
-            temp = temp.sig;
-        }
-    }
-    
 }

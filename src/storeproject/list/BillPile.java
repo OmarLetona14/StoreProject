@@ -40,10 +40,7 @@ public class BillPile {
             aux.sig = newNodo;           
         }
        size++;
-     
     }
-    
- 
     
     public Bill getBillAt(int idRef) throws Exception{
         if(idRef>=1 && !empty()){
@@ -59,50 +56,4 @@ public class BillPile {
         }
         return null;
     }
-
-    public boolean serch(int idRef){
-        BillNodo aux = first;
-        boolean found = false;
-        while(aux != null && found!=true){
-            if(idRef==aux.info.getIdBill()){
-                found = true;
-            }else{
-                aux = aux.sig;
-            }
-        }
-        return found;
-    }
-   
-    public void delete(int idRef){
-        if(serch(idRef)){
-            if(first.info.getIdBill()==idRef){
-                first = first.sig;
-            }else{
-                BillNodo aux = first;
-                while(aux.sig.info.getIdBill()!=idRef){
-                    aux = aux.sig;
-                }
-                BillNodo next = aux.sig.sig;
-                aux.sig = next;
-            }
-            size--;
-        }
-    }
-    
-    public void print(){
-        
-        BillNodo temp = first;
-        
-        while(temp != null){
-
-            System.out.println("Actual: "+temp.info.getIdBill());
-            if(temp.sig != null){
-                System.out.println("Siguiente: "+temp.sig.info.getIdBill());
-            }
-            System.out.println("-----------------------------");
-            
-            temp = temp.sig;
-        }
-    }
-    
 }

@@ -11,6 +11,7 @@ import javax.swing.table.AbstractTableModel;
 import storeproject.view.LoginWindow;
 
 public class CartTableModel extends AbstractTableModel{
+    
     private final String[] columnNames = new String[]{
         "Producto","Precio"
     };
@@ -20,33 +21,31 @@ public class CartTableModel extends AbstractTableModel{
     };
     
     @Override
-    public String getColumnName(int column)
-    {
+    public String getColumnName(int column){
         return columnNames[column];
     }
+    
     @Override
-    public Class<?> getColumnClass(int columnIndex)
-    {
+    public Class<?> getColumnClass(int columnIndex){
         return columnClass[columnIndex];
     }
+    
     @Override
-    public int getColumnCount()
-    {
+    public int getColumnCount(){
         return columnNames.length;
     }
+    
     @Override
-    public int getRowCount()
-    {
+    public int getRowCount(){
         if(LoginWindow.currentUser.getCart().getCartProducts()!=null){
             return LoginWindow.currentUser.getCart().getCartProducts().listSize();
         }else{
             return 1;
-        }
-        
+        }  
     }
+    
     @Override
-    public Object getValueAt(int rowIndex, int columnIndex)
-    {
+    public Object getValueAt(int rowIndex, int columnIndex){
         Product row = null;
         try {
             if((rowIndex+1)!=getRowCount()){
@@ -64,12 +63,11 @@ public class CartTableModel extends AbstractTableModel{
                 return row.getPrice();
             }
         }
-        
         return null;
     }
+    
     @Override
-   public void setValueAt(Object aValue, int rowIndex, int columnIndex)
-   {    
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex){    
        Product instance = (Product)aValue;
        Product row = null;
         try {
@@ -91,11 +89,10 @@ public class CartTableModel extends AbstractTableModel{
                 break;
             }
         }        
-   }
+    }
    
     @Override
-    public boolean isCellEditable(int rowIndex, int columnIndex)
-    {
+    public boolean isCellEditable(int rowIndex, int columnIndex){
         return false;
     }
 }

@@ -21,28 +21,27 @@ public class OfferTableModel extends AbstractTableModel {
     };
     
     @Override
-    public String getColumnName(int column)
-    {
+    public String getColumnName(int column){
         return columnNames[column];
     }
+    
     @Override
-    public Class<?> getColumnClass(int columnIndex)
-    {
+    public Class<?> getColumnClass(int columnIndex){
         return columnClass[columnIndex];
     }
+    
     @Override
-    public int getColumnCount()
-    {
+    public int getColumnCount(){
         return columnNames.length;
     }
+    
     @Override
-    public int getRowCount()
-    {
+    public int getRowCount(){
         return Lists.offers.listSize();
     }
+    
     @Override
-    public Object getValueAt(int rowIndex, int columnIndex)
-    {
+    public Object getValueAt(int rowIndex, int columnIndex){
         Offer row = null;
         try {
             if((rowIndex+1)!=getRowCount()){
@@ -58,12 +57,11 @@ public class OfferTableModel extends AbstractTableModel {
                 return row.getDiscount();
             }
         }
-        
         return null;
     }
+    
     @Override
-   public void setValueAt(Object aValue, int rowIndex, int columnIndex)
-   {    
+   public void setValueAt(Object aValue, int rowIndex, int columnIndex){    
        Offer instance = (Offer)aValue;
        Offer row = null;
         try {
@@ -83,12 +81,10 @@ public class OfferTableModel extends AbstractTableModel {
                 break;
             }
         }        
-   }
+    }
    
     @Override
-    public boolean isCellEditable(int rowIndex, int columnIndex)
-    {
+    public boolean isCellEditable(int rowIndex, int columnIndex){
         return false;
-    }
-    
+    }   
 }

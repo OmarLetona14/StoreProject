@@ -97,6 +97,12 @@ public class OfferAdministrationWindow extends javax.swing.JFrame {
 
         productsCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
 
+        discountTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                discountTxtKeyTyped(evt);
+            }
+        });
+
         addProductBtn.setText("Agregar producto");
         addProductBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -260,6 +266,7 @@ public class OfferAdministrationWindow extends javax.swing.JFrame {
 
     private void addOfferBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addOfferBtnActionPerformed
         try{
+            currentProducts = new SimplyLinkedCircularListProduct();
             if(priorityCb.getSelectedItem().equals("Alta")){
                 Lists.offers.addToFinal(descriptionTxt.getText(), Double.valueOf(discountTxt.getText().trim()), currentProducts);
                 JOptionPane.showMessageDialog(this, "Oferta agregada correctamente", "Eliminada",
@@ -269,7 +276,7 @@ public class OfferAdministrationWindow extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Oferta agregada correctamente", "Eliminada",
                             JOptionPane.INFORMATION_MESSAGE);
             }
-        currentOffer = new Offer(Lists.offers.listSize()-2, descriptionTxt.getText(), 
+        currentOffer = new Offer(Lists.offers.listSize()-1, descriptionTxt.getText(), 
                 Double.valueOf(discountTxt.getText().trim()), currentProducts);
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar agregar la oferta", "Error",
@@ -304,6 +311,15 @@ public class OfferAdministrationWindow extends javax.swing.JFrame {
                             JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_addProductBtnActionPerformed
+
+    private void discountTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_discountTxtKeyTyped
+        char validChar = evt.getKeyChar();
+        if(Character.isLetter(validChar)){
+           getToolkit().beep();
+           evt.consume();        
+        }
+        
+    }//GEN-LAST:event_discountTxtKeyTyped
 
     /**
      * @param args the command line arguments

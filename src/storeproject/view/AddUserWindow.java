@@ -13,7 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import storeproject.list.Lists;
-import storeproject.model.Cart;
 import storeproject.model.CreditCard;
 
 public class AddUserWindow extends javax.swing.JFrame {

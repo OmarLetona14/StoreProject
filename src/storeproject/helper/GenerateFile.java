@@ -1,6 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change this template file, choose Tools | Templates * To change this license header, choose License Headers in Project Properties.
+
  * and open the template in the editor.
  */
 package storeproject.helper;
@@ -79,7 +79,7 @@ public class GenerateFile {
         printw.println("<html>");
         printw.println("<head><title>Listado de productos comprados por usuario</title></head>");
         printw.println("<body>");
-        for(int i=1; i<(Lists.users.listSize()-1);i++){
+        for(int i=1; i<Lists.users.listSize();i++){
             billUser = Lists.users.getUserAt(i);
             if(billUser!=null){
                 if(billUser.getPurchasedProducts().listSize()>1){
@@ -147,7 +147,7 @@ public class GenerateFile {
         JFreeChart graphic;
         numbers = new int[100];
         DefaultCategoryDataset data = new DefaultCategoryDataset();
-        for(int i=1;i<Lists.products.listSize();i++){
+        for(int i=1;i<=Lists.products.listSize();i++){
             numbers[i-1] = (int)Lists.products.getProductAt(i).getGain();  
         }
         burbuja(numbers);      
@@ -170,12 +170,9 @@ public class GenerateFile {
         PdfWriter writter = new PdfWriter("C:\\Users\\Omar\\Desktop\\StoreProject\\reports\\Productos con oferta.pdf");
         PdfDocument pdfDoc = new PdfDocument(writter);
         Document document = new Document(pdfDoc);
-        Table offeredTable = new Table(new float[]{10,10});
+        Table offeredTable = new Table(new float[]{5,5});
         offeredTable.addHeaderCell(new Cell().add(new Paragraph("Oferta")));
         offeredTable.addHeaderCell(new Cell().add(new Paragraph("Producto")));
-        offeredTable.addHeaderCell(new Cell().add(new Paragraph("Descuento")));
-        offeredTable.addHeaderCell(new Cell().add(new Paragraph("Precio normal")));
-        offeredTable.addHeaderCell(new Cell().add(new Paragraph("Precio con descuento")));
         offeredTable.setWidth(100);   
         for(int i=1;i<Lists.offers.listSize();i++){
             currentOffer = Lists.offers.getOfferAt(i);
@@ -184,11 +181,6 @@ public class GenerateFile {
                     if(currentOffer.getProducts().listSize()>1){
                         offeredTable.addCell(new Cell().add(new Paragraph(currentOffer.getDescription())));
                         offeredTable.addCell(new Cell().add(new Paragraph(currentOffer.getProducts().getProductAt(x).getName())));
-                        offeredTable.addCell(new Cell().add(new Paragraph(String.valueOf(currentOffer.getDiscount()))));
-                        offeredTable.addCell(new Cell().add(new Paragraph(
-                                String.valueOf(currentOffer.getProducts().getProductAt(x).getPrice()))));
-                        offeredTable.addCell(new Cell().add(new Paragraph(
-                                String.valueOf(currentOffer.getProducts().getProductAt(x).getPrice() - currentOffer.getDiscount()))));
                     }   
                 }
             }   

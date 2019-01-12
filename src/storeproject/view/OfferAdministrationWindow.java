@@ -25,7 +25,7 @@ public class OfferAdministrationWindow extends javax.swing.JFrame {
     OfferTableModel model = new OfferTableModel();
     private static int selected = 0;
     Offer currentOffer;
-    SimplyLinkedCircularListProduct currentProducts;
+    SimplyLinkedCircularListProduct currentProducts = new SimplyLinkedCircularListProduct();
     private boolean notSelected = true;
     private Product currentProduct;
     
@@ -266,17 +266,17 @@ public class OfferAdministrationWindow extends javax.swing.JFrame {
 
     private void addOfferBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addOfferBtnActionPerformed
         try{
-            currentProducts = new SimplyLinkedCircularListProduct();
             if(priorityCb.getSelectedItem().equals("Alta")){
                 Lists.offers.addToFinal(descriptionTxt.getText(), Double.valueOf(discountTxt.getText().trim()), currentProducts);
-                JOptionPane.showMessageDialog(this, "Oferta agregada correctamente", "Eliminada",
+                JOptionPane.showMessageDialog(this, "Oferta agregada correctamente", "Agregada",
                             JOptionPane.INFORMATION_MESSAGE);
+                
             }else if(priorityCb.getSelectedItem().equals("Baja")){
                 Lists.offers.addToBegin(descriptionTxt.getText(), Double.valueOf(discountTxt.getText().trim()), currentProducts);
-                JOptionPane.showMessageDialog(this, "Oferta agregada correctamente", "Eliminada",
+                JOptionPane.showMessageDialog(this, "Oferta agregada correctamente", "Agregada",
                             JOptionPane.INFORMATION_MESSAGE);
-            }
-        currentOffer = new Offer(Lists.offers.listSize()-1, descriptionTxt.getText(), 
+            } 
+            currentOffer = new Offer(Lists.offers.listSize()-1, descriptionTxt.getText(), 
                 Double.valueOf(discountTxt.getText().trim()), currentProducts);
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar agregar la oferta", "Error",
@@ -284,12 +284,18 @@ public class OfferAdministrationWindow extends javax.swing.JFrame {
         }
         for(int i=1; i<=currentProducts.listSize();i++){
             try {
+                currentProducts.getProductAt(i).setOffer(currentOffer);
                 Lists.products.getProductByName(currentProducts.getProductAt(i).getName()).setOffer(currentOffer);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar agregar la oferta", "Error",
                             JOptionPane.ERROR_MESSAGE);
             }
         }
+        currentProducts = new SimplyLinkedCircularListProduct();
+        this.dispose();
+        OfferAdministrationWindow window = new OfferAdministrationWindow();
+        window.setVisible(true);
+        
     }//GEN-LAST:event_addOfferBtnActionPerformed
 
     private void addProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductBtnActionPerformed

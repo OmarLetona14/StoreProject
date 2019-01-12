@@ -227,13 +227,15 @@ public class PaymentWindow extends javax.swing.JFrame {
             if(verifyCreditcard(creditCard)){
                 try{
                     Lists.bills.push(LoginWindow.currentUser, creditCard, addressTxt.getText(), billNameTxt.getText(), NitTxt.getText());
-                    for(int i=1;i<=LoginWindow.currentUser.getCart().getCartProducts().listSize();i++){
+                    for(int i=1;i<LoginWindow.currentUser.getCart().getCartProducts().listSize();i++){
                         tempProduct = LoginWindow.currentUser.getCart().getCartProducts().getProductAt(i);
-                        LoginWindow.currentUser.getPurchasedProducts().addToFinal(tempProduct.getIdentifier(), tempProduct.getName(), 
+                        if(tempProduct!=null){
+                            LoginWindow.currentUser.getPurchasedProducts().addToFinal(tempProduct.getIdentifier(), tempProduct.getName(), 
                                 tempProduct.getDescription(), tempProduct.getPrice(), tempProduct.getStock(), tempProduct.getImageDirection(), 
                                 tempProduct.getOffer());
+                        }
                     }
-                    for(int y=1;y<=LoginWindow.currentUser.getCart().getCartProducts().listSize();y++){
+                    for(int y=1;y<LoginWindow.currentUser.getCart().getCartProducts().listSize();y++){
                         oldGain = Lists.products.getProductByName(LoginWindow.currentUser.getCart().getCartProducts().getProductAt(y).getName()).getGain();
                         priceProduct = Lists.products.getProductByName(LoginWindow.currentUser.getCart().getCartProducts().getProductAt(y).getName()).getPrice();
                         Lists.products.getProductByName(LoginWindow.currentUser.getCart().getCartProducts().getProductAt(y).getName()).setGain(oldGain+priceProduct);

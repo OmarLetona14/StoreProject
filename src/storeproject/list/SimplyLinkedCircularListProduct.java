@@ -66,8 +66,7 @@ public class SimplyLinkedCircularListProduct {
                     passed = true;
                     }
                     aux = aux.sig;
-                }
-                
+                }                
                 return aux.info;
             }
         }

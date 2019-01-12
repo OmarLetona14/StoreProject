@@ -25,7 +25,7 @@ public class OfferAdministrationWindow extends javax.swing.JFrame {
     CustomFileReader fileReader = new CustomFileReader();
     OfferTableModel model = new OfferTableModel();
     private static int selected = 0;
-    Offer currentOffer;
+    Offer currentOffer, deletedOffer;
     SimplyLinkedCircularListProduct currentProducts = new SimplyLinkedCircularListProduct();
     private boolean notSelected = true;
     private Product currentProduct;
@@ -250,12 +250,17 @@ public class OfferAdministrationWindow extends javax.swing.JFrame {
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         if(!notSelected){
             try{
-                Lists.offers.delete(selected+1);
+                deletedOffer = Lists.offers.getOfferAt(selected+1);
                 for(int i = 1;i<=Lists.offers.getOfferAt(selected+1).getProducts().listSize();i++){
-                    Lists.offers.getOfferAt(selected+1).getProducts().getProductAt(i).setOffer(null);
-                    JOptionPane.showMessageDialog(this, "Oferta eliminada correctamente", "Eliminada",
-                            JOptionPane.INFORMATION_MESSAGE);
+                    deletedOffer.getProducts().getProductAt(i).setOffer(null);
+                    Lists.products.getProductByName(deletedOffer.getProducts().getProductAt(i).getName()).setOffer(null);
                 }
+                Lists.offers.delete(selected+1);
+                JOptionPane.showMessageDialog(this, "Oferta eliminada correctamente", "Eliminada",
+                            JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+                OfferAdministrationWindow offerWindow = new OfferAdministrationWindow();
+                offerWindow.setVisible(true);
                 
             }catch(Exception e){
                 JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",

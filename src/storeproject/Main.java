@@ -11,7 +11,7 @@ import storeproject.view.LoginWindow;
 public class Main {
 
     public static void main(String[] args) {
-        Lists.users.addToFinal("Administrador", "", "ADMIN", "", "", "", "");
+        Lists.users.addToFinal("Administrador", "", "ADMIN", "ADMIN", "", "", "");
         Lists.users.addToFinal("Omar", "omarletonaf@gmail.com", "omar", "123", "BAC CREDOMATIC", "11/01/2019", "123");
         LoginWindow login = new LoginWindow();
         login.setVisible(true);

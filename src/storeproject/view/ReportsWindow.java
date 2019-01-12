@@ -14,7 +14,7 @@ import storeproject.helper.GenerateFile;
 public class ReportsWindow extends javax.swing.JFrame {
 
     GenerateFile fileGenerator = new GenerateFile();
-    File currentFile;
+    File productsPerUser, productsWithOffer, canceledPayment;
     
     public ReportsWindow() {
         initComponents();
@@ -109,11 +109,11 @@ public class ReportsWindow extends javax.swing.JFrame {
 
     private void canceledPaymentsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_canceledPaymentsBtnActionPerformed
        try{
-           currentFile = fileGenerator.generateCanceledPaymentReport("C:\\Users\\Omar\\Desktop\\StoreProject\\reports\\PagosCancelados");
+           canceledPayment = fileGenerator.generateCanceledPaymentReport("C:\\Users\\Omar\\Desktop\\StoreProject\\reports\\PagosCancelados");
            JOptionPane.showMessageDialog(this, "Reporte generado correctamente", "Generado",
                             JOptionPane.INFORMATION_MESSAGE);
-           Desktop.getDesktop().open(currentFile);
-           currentFile.deleteOnExit();
+           Desktop.getDesktop().open(canceledPayment);
+           canceledPayment.deleteOnExit();
        }catch(Exception e){
            JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
                                 JOptionPane.ERROR_MESSAGE);
@@ -122,11 +122,11 @@ public class ReportsWindow extends javax.swing.JFrame {
 
     private void productsPerUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productsPerUserBtnActionPerformed
         try{
-            currentFile = fileGenerator.generateProductsPerUserReport();
+            productsPerUser = fileGenerator.generateProductsPerUserReport();
             JOptionPane.showMessageDialog(this, "Reporte generado correctamente", "Generado",
                             JOptionPane.INFORMATION_MESSAGE);
-            Desktop.getDesktop().open(currentFile);
-            currentFile.deleteOnExit();
+            Desktop.getDesktop().open(productsPerUser);
+            productsPerUser.deleteOnExit();
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
                                 JOptionPane.ERROR_MESSAGE);
@@ -135,11 +135,11 @@ public class ReportsWindow extends javax.swing.JFrame {
 
     private void productsWithOfferBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productsWithOfferBtnActionPerformed
         try{
-            currentFile = fileGenerator.generateProductsWithOffer();
+            productsWithOffer = fileGenerator.generateProductsWithOffer();
             JOptionPane.showMessageDialog(this, "Reporte generado correctamente", "Generado",
                             JOptionPane.INFORMATION_MESSAGE);
-            Desktop.getDesktop().open(currentFile);
-            currentFile.deleteOnExit();
+            Desktop.getDesktop().open(productsWithOffer);
+            productsWithOffer.deleteOnExit();
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, "Ocurrió un error, inténtelo de nuevo", "Error",
                                 JOptionPane.ERROR_MESSAGE);

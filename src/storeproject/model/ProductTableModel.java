@@ -12,7 +12,7 @@ import storeproject.list.Lists;
 
 public class ProductTableModel extends AbstractTableModel {
     private final String[] columnNames = new String[]{
-        "Identificador","Nombre", "Descripcion", "Precio", "Existencia", "Direccion de la imagen"
+        "Identificador","Nombre", "Descripcion", "Precio(Q)", "Existencia", "Direccion de la imagen"
     };
     
     private final Class[] columnClass = new Class[] {

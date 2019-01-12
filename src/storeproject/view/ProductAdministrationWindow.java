@@ -281,7 +281,10 @@ public class ProductAdministrationWindow extends javax.swing.JFrame {
     private void loadArchiveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadArchiveBtnActionPerformed
         JOptionPane.showMessageDialog(this, "Por favor, seleccione el archivo", "Archivo",
                                 JOptionPane.INFORMATION_MESSAGE);
+        
         JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter productFilter=new FileNameExtensionFilter("Productos","proadd");
+        fileChooser.setFileFilter(productFilter);
         int optionChoose = fileChooser.showOpenDialog(this);
         if(optionChoose==JFileChooser.APPROVE_OPTION){
             File f = fileChooser.getSelectedFile();

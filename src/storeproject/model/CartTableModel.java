@@ -13,7 +13,7 @@ import storeproject.view.LoginWindow;
 public class CartTableModel extends AbstractTableModel{
     
     private final String[] columnNames = new String[]{
-        "Producto","Precio"
+        "Producto","Precio(Q)"
     };
     
     private final Class[] columnClass = new Class[] {

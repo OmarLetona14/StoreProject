@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import storeproject.helper.CustomFileReader;
 import storeproject.list.Lists;
 import storeproject.list.SimplyLinkedCircularListProduct;
@@ -219,6 +220,8 @@ public class OfferAdministrationWindow extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Por favor, seleccione el archivo", "Archivo",
                                 JOptionPane.INFORMATION_MESSAGE);
         JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter offerFilter=new FileNameExtensionFilter("Ofertas","proofer");
+        fileChooser.setFileFilter(offerFilter);
         int optionChoose = fileChooser.showOpenDialog(this);
         if(optionChoose==JFileChooser.APPROVE_OPTION){
             File f = fileChooser.getSelectedFile();

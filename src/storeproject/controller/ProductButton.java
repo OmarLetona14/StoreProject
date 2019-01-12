@@ -71,11 +71,11 @@ public class ProductButton extends JButton implements ActionListener {
             }
             if(offered){
                 UserMainWindow.total += (product.getPrice()-product.getOffer().getDiscount());
-                UserMainWindow.cartText = "Carrito" + "("+UserMainWindow.total+")";
+                UserMainWindow.cartText = "Carrito" + "(Q"+UserMainWindow.total+")";
                 cartBtn.setText(UserMainWindow.cartText);
             }else{
                 UserMainWindow.total += product.getPrice();
-                UserMainWindow.cartText = "Carrito" + "("+UserMainWindow.total+")";
+                UserMainWindow.cartText = "Carrito" + "(Q"+UserMainWindow.total+")";
                 cartBtn.setText(UserMainWindow.cartText);
             }             
         }catch(Exception ex){

@@ -12,6 +12,7 @@ import java.util.Date;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import storeproject.helper.GenerateFile;
+import storeproject.helper.RandomNumber;
 import storeproject.list.Lists;
 import storeproject.model.Bill;
 import storeproject.model.CartTableModel;
@@ -22,6 +23,8 @@ public class PaymentWindow extends javax.swing.JFrame {
     
     CartTableModel model = new CartTableModel();
     int option;
+    RandomNumber random = RandomNumber.getSingletonInstance();
+    String filename;
     Product tempProduct, cartProduct;
     CreditCard creditCard, userCreditCard;
     Bill currentBill;
@@ -240,13 +243,16 @@ public class PaymentWindow extends javax.swing.JFrame {
                         priceProduct = Lists.products.getProductByName(LoginWindow.currentUser.getCart().getCartProducts().getProductAt(y).getName()).getPrice();
                         Lists.products.getProductByName(LoginWindow.currentUser.getCart().getCartProducts().getProductAt(y).getName()).setGain(oldGain+priceProduct);
                     }
+                    filename = "Factura"+random.generateIdentifier() ;
+                    File f = new File(filename);
                     JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setSelectedFile(f);
                     int optionChoose = fileChooser.showSaveDialog(this);
                     if(optionChoose==JFileChooser.APPROVE_OPTION){
                         currentBill = new Bill(Lists.bills.listSize()-1,LoginWindow.currentUser, creditCard, addressTxt.getText(),
                                 billNameTxt.getText(), NitTxt.getText() );
                         GenerateFile fileGenerator = new GenerateFile();
-                        File f = fileChooser.getSelectedFile();
+                        f = fileChooser.getSelectedFile();
                         fileGenerator.generateBill(f.toString(), currentBill);
                         JOptionPane.showMessageDialog(this, "Factura generada correctamente", "Generado",
                             JOptionPane.INFORMATION_MESSAGE);

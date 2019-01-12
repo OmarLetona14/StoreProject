@@ -32,7 +32,7 @@ public class ProductsWindow extends javax.swing.JFrame {
         ProgressWindow progressWindow= new ProgressWindow(true);
         progressWindow.setVisible(true);
         userNameTxt.setText( "Hola, " + LoginWindow.currentUser.getName());
-        UserMainWindow.cartText = "Carrito" + "("+UserMainWindow.total+")";
+        UserMainWindow.cartText = "Carrito" + "(Q"+UserMainWindow.total+")";
     }
     
     private void generateProductsMatrix(){
@@ -47,10 +47,20 @@ public class ProductsWindow extends javax.swing.JFrame {
             for(int columna = 0; columna<=3; columna++){
                 if(tamaño!=0){
                     try {
-                        productButtonMatrix[fila][columna] = new ProductButton((15+190*columna), (180+220*fila),
-                                Lists.products.getProductAt(tamaño), conteiner, this, cartBtn, false);
+                        
+                        if(Lists.products.getProductAt(tamaño)!=null && Lists.products.getProductAt(tamaño).getOffer()!=null){
+                            productButtonMatrix[fila][columna] = new ProductButton((15+190*columna), (180+220*fila),
+                                Lists.products.getProductAt(tamaño), conteiner, this, cartBtn, true);
+                            descriptionLabelMatrix[fila][columna] = new DescriptionLabel(15+190*columna, (110+220*fila),
+                                    Lists.products.getProductAt(tamaño), conteiner,true);
+                        }else if(Lists.products.getProductAt(tamaño)!=null && Lists.products.getProductAt(tamaño).getOffer()==null){
+                            productButtonMatrix[fila][columna] = new ProductButton((15+190*columna), (180+220*fila),
+                                Lists.products.getProductAt(tamaño), conteiner, this, cartBtn, false);    
+                            descriptionLabelMatrix[fila][columna] = new DescriptionLabel(15+190*columna, (110+220*fila),
+                                    Lists.products.getProductAt(tamaño), conteiner,false);
+                        }
                         imageLabelMatrix[fila][columna] = new ImageLabel( (15+ 190*columna),  (15 +220*fila), Lists.products.getProductAt(tamaño), conteiner);
-                        descriptionLabelMatrix[fila][columna] = new DescriptionLabel(15+190*columna, (110+220*fila), Lists.products.getProductAt(tamaño), conteiner,false);
+                        
                     } catch (Exception ex) {
                         Logger.getLogger(ProductsWindow.class.getName()).log(Level.SEVERE, null, ex);
                     }         
@@ -110,14 +120,14 @@ public class ProductsWindow extends javax.swing.JFrame {
                 .addComponent(userNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(modifyUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(185, 185, 185)
+                .addGap(80, 80, 80)
                 .addComponent(cartBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addComponent(scrollProducts)
-                .addContainerGap())
+                .addComponent(scrollProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 758, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

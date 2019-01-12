@@ -23,7 +23,7 @@ public class CartWindow extends javax.swing.JFrame {
         setResizable(false);
         cartTable.setModel(model);
         userNameTxt.setText( "Hola, " + LoginWindow.currentUser.getName());
-        TotalTxt.setText( "Total: " + UserMainWindow.total);
+        TotalTxt.setText( "Total: Q" + UserMainWindow.total);
         if(LoginWindow.currentUser.getCart().getCartProducts()!=null){
             productsCount = (LoginWindow.currentUser.getCart().getCartProducts().listSize()-1);
             addedProductsTxt.setText("Total de articulos: "+ productsCount);

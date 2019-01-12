@@ -11,6 +11,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Table;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -73,8 +74,9 @@ public class GenerateFile {
         return articles;
     }
     
-    public void generateProductsPerUserReport() throws IOException, Exception{
-        filewriter = new FileWriter("C:\\Users\\Omar\\Desktop\\StoreProject\\reports\\Productos comprados por cada usuario.html");
+    public File generateProductsPerUserReport() throws IOException, Exception{
+        File newFile = new File("C:\\Users\\Omar\\Desktop\\StoreProject\\reports\\Productos comprados por cada usuario.html");
+        filewriter = new FileWriter(newFile);
         printw = new PrintWriter(filewriter);
         printw.println("<html>");
         printw.println("<head><title>Listado de productos comprados por usuario</title></head>");
@@ -97,10 +99,12 @@ public class GenerateFile {
         printw.println("</body>");
         printw.println("</html>");
         printw.close();
+        return newFile;
     }
     
-    public void generateCanceledPaymentReport(String route) throws FileNotFoundException{
-        PdfWriter writter = new PdfWriter(route+ ".pdf");
+    public File generateCanceledPaymentReport(String route) throws FileNotFoundException{
+        File newFile = new File(route+ ".pdf");
+        PdfWriter writter = new PdfWriter(newFile);
         PdfDocument pdfDoc = new PdfDocument(writter);
         Document document = new Document(pdfDoc);
         Table canceledTable = new Table(new float[]{10,10});
@@ -120,6 +124,7 @@ public class GenerateFile {
         }        
         document.add(canceledTable);
         document.close();
+        return newFile;
     }
     
      private static void burbuja(int[] arreglo){
@@ -166,8 +171,9 @@ public class GenerateFile {
         grafico.setVisible(true);
     }
     
-    public void generateProductsWithOffer() throws FileNotFoundException, Exception{
-        PdfWriter writter = new PdfWriter("C:\\Users\\Omar\\Desktop\\StoreProject\\reports\\Productos con oferta.pdf");
+    public File generateProductsWithOffer() throws FileNotFoundException, Exception{
+        File newFile = new File("C:\\Users\\Omar\\Desktop\\StoreProject\\reports\\Productos con oferta.pdf");
+        PdfWriter writter = new PdfWriter(newFile);
         PdfDocument pdfDoc = new PdfDocument(writter);
         Document document = new Document(pdfDoc);
         Table offeredTable = new Table(new float[]{5,5});
@@ -187,5 +193,6 @@ public class GenerateFile {
         }      
         document.add(offeredTable);
         document.close();  
+        return newFile;
     }
 }

@@ -10,6 +10,7 @@ import storeproject.model.Product;
 import storeproject.nodo.CartProductNodo;
 
 public class DoubleLinkedCircularListCartProduct {
+    
     private CartProductNodo actual;
     private int size = 1;
     private boolean passed=false;

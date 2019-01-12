@@ -5,14 +5,16 @@
  */
 package storeproject.model;
 
-import storeproject.list.SimplyLinkedCircularListProduct;
+import storeproject.list.DoubleLinkedCircularListCartProduct;
+
+
 
 public class Cart {
     
-    private SimplyLinkedCircularListProduct cartProducts;
+    private DoubleLinkedCircularListCartProduct cartProducts;
     private double total;
 
-    public Cart(SimplyLinkedCircularListProduct cartProducts, double total) {
+    public Cart(DoubleLinkedCircularListCartProduct cartProducts, double total) {
         this.cartProducts = cartProducts;
         this.total = total;
     }
@@ -20,11 +22,11 @@ public class Cart {
     public Cart() {
     }
 
-    public SimplyLinkedCircularListProduct getCartProducts() {
+    public DoubleLinkedCircularListCartProduct getCartProducts() {
         return cartProducts;
     }
 
-    public void setCartProducts(SimplyLinkedCircularListProduct cartProducts) {
+    public void setCartProducts(DoubleLinkedCircularListCartProduct cartProducts) {
         this.cartProducts = cartProducts;
     }
 

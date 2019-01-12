@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import storeproject.list.DoubleLinkedCircularListCartProduct;
 import storeproject.list.SimplyLinkedCircularListProduct;
 import storeproject.model.Product;
 import storeproject.view.LoginWindow;
@@ -19,7 +20,7 @@ import storeproject.view.UserMainWindow;
 public class ProductButton extends JButton implements ActionListener {
     
     String nowPrice;
-    private SimplyLinkedCircularListProduct cartProduct;
+    private DoubleLinkedCircularListCartProduct cartProduct;
     private final Product product;
     private final JFrame window;
     private JButton cartBtn;
@@ -53,7 +54,7 @@ public class ProductButton extends JButton implements ActionListener {
                 JOptionPane.showMessageDialog(window, "Se agregó al carrito", "Agregado",
                             JOptionPane.INFORMATION_MESSAGE);
             }else{
-                cartProduct = new SimplyLinkedCircularListProduct();
+                cartProduct = new DoubleLinkedCircularListCartProduct();
                 if(offered){
                     cartProduct.addToFinal(product.getIdentifier(), product.getName(), product.getDescription(), 
                             product.getPrice()- product.getOffer().getDiscount(), product.getStock(), product.getImageDirection(), product.getOffer());

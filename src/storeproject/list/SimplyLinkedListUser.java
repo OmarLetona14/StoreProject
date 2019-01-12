@@ -10,8 +10,9 @@ import storeproject.model.User;
 import storeproject.nodo.UserNodo;
 
 public class SimplyLinkedListUser {
+    
     private UserNodo first;
-    private SimplyLinkedCircularListProduct purchasedProducts;
+    private DoubleLinkedCircularListCartProduct purchasedProducts;
     int size=1;
     
     public SimplyLinkedListUser(){
@@ -28,7 +29,7 @@ public class SimplyLinkedListUser {
     
     public void addToFinal(String name, String email, String nickname, String password, String creditCardName, String expirationDate, String CVCCode){
         CreditCard creditCard = new CreditCard(creditCardName, expirationDate, CVCCode);
-        purchasedProducts = new SimplyLinkedCircularListProduct();
+        purchasedProducts = new DoubleLinkedCircularListCartProduct();
         User user  = new User(size, name, email, nickname, password, creditCard, null,null, purchasedProducts);
         UserNodo newNodo = new UserNodo(user);
         if(empty()){   

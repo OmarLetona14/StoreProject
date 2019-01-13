@@ -85,6 +85,7 @@ public class SimplyLinkedCircularListProduct {
                 aux = aux.sig;
             }
         }
+        passed = false;
         return null;
     }
     
@@ -100,6 +101,7 @@ public class SimplyLinkedCircularListProduct {
                 aux = aux.sig;
             }
         }
+        passed = false;
         return null;
     }
 
@@ -130,6 +132,7 @@ public class SimplyLinkedCircularListProduct {
             aux.info.setPrice(price);
             aux.info.setStock(stock);
             aux.info.setImageDirection(imageDirection);
+            passed = false;
         }
     }
    

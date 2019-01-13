@@ -44,11 +44,11 @@ public class ProductTableModel extends AbstractTableModel {
     {
         Product row = null;
         try {
-            if(rowIndex>0){
+            
                 if((rowIndex+1)<getRowCount()){
                 row = Lists.products.getProductAt(rowIndex+1);
                 }
-            } 
+            
         } catch (Exception ex) {
             Logger.getLogger(ProductTableModel.class.getName()).log(Level.SEVERE, null, ex);
         }if(row!=null){
@@ -78,10 +78,10 @@ public class ProductTableModel extends AbstractTableModel {
        Product instance = (Product)aValue;
        Product row = null;
         try {
-            if(rowIndex>0){
+            
                 if((rowIndex+1)<getRowCount()){
                 row = Lists.products.getProductAt(rowIndex+1);
-                }
+                
             }
               
         } catch (Exception ex) {

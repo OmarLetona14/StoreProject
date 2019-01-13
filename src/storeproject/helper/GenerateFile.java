@@ -156,13 +156,13 @@ public class GenerateFile {
             numbers[i-1] = (int)Lists.products.getProductAt(i).getGain();  
         }
         burbuja(numbers);      
-        for(int x=0; x<=usedMatrixPointer();x++){
-            if(x<10){
+        for(int x=0; x<=usedMatrixPointer();x++){        
                 graphicProduct = Lists.products.getProductByGain(numbers[x]);
                 if(graphicProduct!=null){
-                    data.addValue(graphicProduct.getGain(), "10 productos más vendidos", graphicProduct.getName());               
+                    if(x<10){
+                    data.addValue(graphicProduct.getGain(), "10 productos más vendidos", graphicProduct.getName());  
+                    }
                 }
-            } 
         }
         graphic = ChartFactory.createBarChart("Top 10 productos más vendidos", 
                 "Productos", "Ganancias(Q)", data, PlotOrientation.VERTICAL, true, true, false);

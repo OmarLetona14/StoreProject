@@ -27,6 +27,7 @@ public class UserMainWindow extends javax.swing.JFrame implements Runnable{
     Product currentProduct;
     private static boolean verified = false;
     ProductsWindow productsWindow;
+    public static int contador = 0;
     int filas, tamaño;
     JPanel conteiner;
     
@@ -36,7 +37,7 @@ public class UserMainWindow extends javax.swing.JFrame implements Runnable{
         setResizable(false);
         userText =  "Hola, " + LoginWindow.currentUser.getName();
         userNameTxt.setText(userText);
-        cartText = "Carrito" + "(Q"+total+")";
+        cartText = "Carrito" + "(("+contador+")Q"+total+")";
         cartBtn.setText(cartText);
         boolean loaded;
         offeredProductsList = new SimplyLinkedCircularListProduct();

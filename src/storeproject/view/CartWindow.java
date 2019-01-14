@@ -35,6 +35,7 @@ public class CartWindow extends javax.swing.JFrame {
         LoginWindow.currentUser.setCart(new Cart());
         UserMainWindow.cartText = "";
         UserMainWindow.total = 0.0;
+        UserMainWindow.contador=0;
     }
 
     /**
